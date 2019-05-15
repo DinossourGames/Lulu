@@ -14,7 +14,7 @@ namespace MainPrototype
     
     public partial class GameScreen : Form
     {
-        Player player = new Player();
+       
         bool choosing = false;
         int speed = 5;
         int NumMonters = 6;
@@ -31,6 +31,7 @@ namespace MainPrototype
         public GameScreen()
         {
             InitializeComponent();
+            Statics.CreateNewPlayer();
             MatrizTiles = new CustomTile[Colunas, Linhas];
             monsters = new Monster[NumMonters];
         }
@@ -94,7 +95,7 @@ namespace MainPrototype
                 }
                 CleanTilesMinusPlayer();
                 c.PutPlayer();
-                player.X = c.x; player.Y = c.y;
+                Statics.UpdatePlayer(c.x, c.y);
                 choosing = false;
             }else
             {
@@ -132,18 +133,18 @@ namespace MainPrototype
             }       
         }
 
-        public void CleanAllTiles()
-        {
-            for (int i = 0; i < Colunas; i++)
-            {
-                for (int j = 0; j < Linhas; j++)
-                {
+        //public void CleanAllTiles()
+        //{
+        //    for (int i = 0; i < Colunas; i++)
+        //    {
+        //        for (int j = 0; j < Linhas; j++)
+        //        {
                     
-                    MatrizTiles[i, j].BackColor = Color.CadetBlue;
+        //            MatrizTiles[i, j].BackColor = Color.CadetBlue;
                    
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
         public void CleanTilesMinusPlayer()
         {
             for (int i = 0; i < Colunas; i++)
