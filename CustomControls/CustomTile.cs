@@ -26,18 +26,21 @@ namespace CustomControls
 
         [Browsable(true)]
         [Category("CustomProps")]
-        public bool isPlayer { get; set; }
+        public bool isPlayer { get; set; } = false;
+
+        [Browsable(true)]
+        [Category("CustomProps")]
+        public bool isMonster { get; set; } = false;
         public CustomTile()
         {
             InitializeComponent();
         }
 
-        public CustomTile(int x, int y, bool isLocked, bool isPlayer, int size, BorderStyle b, int coordenadaX, int coordenadaY, Color back)
+        public CustomTile(int x, int y, bool isLocked, int size, BorderStyle b, int coordenadaX, int coordenadaY, Color back)
         {
             this.x = x;
             this.y = y;
             this.isLocked = isLocked;
-            this.isPlayer = isPlayer;
             this.Height = size;
             this.Width = size;
             this.BackColor = back;
@@ -54,6 +57,13 @@ namespace CustomControls
         {
             isPlayer = true;
             this.BackColor = Color.Red;
+        }
+
+        public void PutMonster()
+        {
+            isMonster = true;
+            this.BackColor = Color.DarkCyan;
+            isLocked = true;
         }
     }
 }
