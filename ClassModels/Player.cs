@@ -13,19 +13,23 @@ namespace ClassModels
         public int Def { get;  set; }
         public int X { get;  set; }
         public int Y { get;  set; }
+        public int Speed { get; set; }
+        public int Range{ get; set; }
 
         public Player()
         {
 
         }
 
-        public Player(int hp, int atk, int def, int x, int y)
+        public Player(int hp, int atk, int def, int x, int y, int speed, int range)
         {
             Hp = hp;
             Atk = atk;
             Def = def;
             X = x;
             Y = y;
+            Speed = speed;
+            Range = range;
         }
     }
 }

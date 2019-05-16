@@ -35,9 +35,9 @@ namespace MainPrototype
             return Player;
         }
 
-        public static Player CreateNewPlayer(int Hp,int Atk, int Def, int X, int Y)
+        public static Player CreateNewPlayer(int Hp,int Atk, int Def, int X, int Y, int speed, int range)
         {
-            Player = new Player(Hp,Atk,Def,X,Y);
+            Player = new Player(Hp,Atk,Def,X,Y, speed, range);
             return Player;
         }
 
