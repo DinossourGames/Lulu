@@ -8,13 +8,13 @@ namespace ClassModels
 {
     public class Player
     {
-        public int Hp { get; set; }
-        public int Atk { get;  set; }
+        public int Hp { get; set; } = 10;
+        public int Atk { get; set; } = 3;
         public int Def { get;  set; }
         public int X { get;  set; }
         public int Y { get;  set; }
-        public int Speed { get; set; }
-        public int Range{ get; set; }
+        public int Speed { get; set; } = 5;
+        public int Range { get; set; } = 3;
 
         public Player()
         {
