@@ -8,12 +8,13 @@ namespace ClassModels
 {
     public class Monster
     {
-        public int Hp { get; set; } = 2;
+        public double Hp { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
         public Monster(int hp,int x, int y)
         {
+            Hp = hp;
             X = x;
             Y = y;
         }

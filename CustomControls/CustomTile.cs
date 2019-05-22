@@ -14,11 +14,11 @@ namespace CustomControls
     {
         [Browsable(true)]
         [Category("CustomProps")]
-        public int x { get; set; }
+        public int x { get; private set; }
 
         [Browsable(true)]
         [Category("CustomProps")]
-        public int y { get; set; }
+        public int y { get; private set; }
 
         [Browsable(true)]
         [Category("CustomProps")]
@@ -63,7 +63,6 @@ namespace CustomControls
         {
             isMonster = true;
             this.BackColor = Color.DarkCyan;
-            isLocked = true;
         }
     }
 }

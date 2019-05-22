@@ -9,7 +9,7 @@ namespace ClassModels
     public class Player
     {
         public int Hp { get; set; } = 10;
-        public int Atk { get; set; } = 3;
+        public int Atk { get; set; } = 100;
         public int Def { get;  set; }
         public int X { get;  set; }
         public int Y { get;  set; }

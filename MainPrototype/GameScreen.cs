@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CustomControls;
 using ClassModels;
-using System.Threading;
+using System.Diagnostics;
 namespace MainPrototype
 {
 
@@ -27,29 +27,30 @@ namespace MainPrototype
             ENEMYATK
         }
 
+        Random r = new Random();
+
         Phase phase;
-        int speed = 5;
         int speedLeft;
-        int range = 3;
         int NumMonters = 6;
         int monsterMov = 4;
-        int count = 0;
+        int score = 0;
         public int TileSize { get; private set; } = 32;
         private int linhas = 17;
         private int colunas = 24;
 
         public int Colunas { get => colunas; set => colunas = value; }
         public int Linhas { get => linhas; set => linhas = value; }
-        public int atualFrame { get; private set; }
         public int passosdados { get; private set; } = 0;
         public int monstercounter { get; private set; } = 0;
+        public CustomTile TargetTile;
 
         CustomTile[,] MatrizTiles;
         List<Monster> monsters;
-        private bool locker;
+
         private int tries;
         private int deltaX;
         private int deltaY;
+        public bool moved = false;
 
         public GameScreen()
         {
@@ -65,13 +66,11 @@ namespace MainPrototype
 
         public void TileClick(Object sender, EventArgs e)
         {
-            if (locker)
-            {
-                return;
-            }
+            
             CustomTile c = sender as CustomTile;
             if (phase == Phase.INICIO && !c.isLocked)
             {
+                TargetTile = c;
                 c.PutPlayer();
                 Statics.UpdatePlayer(c.x, c.y);
                 phase = Phase.MOVIMENTACAO;
@@ -79,28 +78,13 @@ namespace MainPrototype
             //Turno de movimento
             else if (phase == Phase.MOVIMENTACAO)
             {
-                speedLeft = speed;
-                if (c.isPlayer)
-                {
-                    phase = Phase.ATAQUE;
-                }
-                else if (c.isLocked == false)
+                speedLeft = Statics.Player.Speed;
+                if (c.isLocked == false)
                 {
                     //Mover player
-                    for (int i = 0; i < Colunas; i++)
-                    {
-                        for (int j = 0; j < Linhas; j++)
-                        {
-                            MatrizTiles[i, j].isPlayer = false;
-                            MatrizTiles[i, j].isLocked = true;
-                        }
-                    }
-                    speedLeft = speed - (Math.Abs(Statics.Player.X - c.x) + Math.Abs(Statics.Player.Y - c.y));
-                    c.PutPlayer();
-                    Statics.UpdatePlayer(c.x, c.y);
-                    phase = Phase.ATAQUE;                   
+                    TargetTile = c;       
                 }
-                
+                moved = true;
             }
             //Turno de ataque
             else if (phase == Phase.ATAQUE)
@@ -116,12 +100,11 @@ namespace MainPrototype
 
                                 M.Hp -= Statics.Player.Atk;
                                 if (M.Hp <= 0)
-                                {
-                                    monsters.Remove(M);
-                                    c.BackColor = Color.CadetBlue;
-                                    c.isMonster = false;
-                                    count++;
-                                    NumMonters--;
+                                {                                   
+                                    score++;
+                                    SpawnRandomMonster();
+                                    
+                                    //NumMonters--;
                                     break;
                                 }
                             }
@@ -138,26 +121,6 @@ namespace MainPrototype
                     phase = Phase.ENEMYMOV;
                 }
 
-                //for (int i = 0; i < Colunas; i++)
-                //{
-                //    for (int j = 0; j < Linhas; j++)
-                //    {
-
-                //        MatrizTiles[i, j].isLocked = true;
-                //    }
-                //}
-                //choosingMov = false;
-
-                //Enemy Turn - Movement
-                //for (int i = 0; i < Colunas; i++)
-                //{
-                //    for (int j = 0; j < Linhas; j++)
-                //    {
-                //        MatrizTiles[i, j].isMonster = false;
-                //        MatrizTiles[i, j].isLocked = true;
-                //    }
-                //}
-
             }
             else if (phase == Phase.RECUO)
             {
@@ -165,45 +128,19 @@ namespace MainPrototype
                 if (c.isLocked == false)
                 {
                     //Mover player
-                    for (int i = 0; i < Colunas; i++)
-                    {
-                        for (int j = 0; j < Linhas; j++)
-                        {
-                            MatrizTiles[i, j].isPlayer = false;
-                            MatrizTiles[i, j].isLocked = true;
-                        }
-                    }
-                    c.PutPlayer();
-                    Statics.UpdatePlayer(c.x, c.y);
+                    TargetTile = c;
                 }
-                else
-                {
-                    //for (int i = 0; i < Colunas; i++)
-                    //{
-                    //    for (int j = 0; j < Linhas; j++)
-                    //    {
-
-                    //        MatrizTiles[i, j].isLocked = true;
-                    //    }
-                    //}
-                }
-                phase = Phase.ENEMYMOV;
+                moved = true;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Random r = new Random();
-            int MonsX, MonsY; double MonsHp = 10;
+
             for (int i = 0; i < NumMonters; i++)
             {
-                MonsHp = Math.Ceiling(MonsHp * (1 + (count / 10)));
-                MonsHp = r.Next(Convert.ToInt32(MonsHp) - 5, Convert.ToInt32(MonsHp) + 6);
-                MonsX = r.Next(0, colunas);
-                MonsY = r.Next(0, linhas);
-                var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), MonsX, MonsY);
-                //monsters[i] = m;
-                monsters.Add(monsterToAdd);
+                
+                SpawnRandomMonster();
             }
             for (int i = 0; i < Colunas; i++)
             {
@@ -223,19 +160,6 @@ namespace MainPrototype
             }
         }
 
-
-        //public void CleanAllTiles()
-        //{
-        //    for (int i = 0; i < Colunas; i++)
-        //    {
-        //        for (int j = 0; j < Linhas; j++)
-        //        {
-
-        //            MatrizTiles[i, j].BackColor = Color.CadetBlue;
-
-        //        }
-        //    }
-        //}
         public void CleanTilesMinusEntities()
         {
             for (int i = 0; i < Colunas; i++)
@@ -252,7 +176,17 @@ namespace MainPrototype
             }
         }
 
-
+        public void SpawnRandomMonster()
+        {
+            int MonsX, MonsY; double MonsHp;
+            MonsHp = Math.Ceiling(10.0 * (1 + (score / 10)));
+            MonsHp = r.Next(Convert.ToInt32(MonsHp) - 5, Convert.ToInt32(MonsHp) + 6);
+            MonsX = r.Next(0, colunas);
+            MonsY = r.Next(0, linhas);
+            var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), MonsX, MonsY);
+            Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
+            monsters.Add(monsterToAdd);
+        }
         public void ShowMovementOptions(CustomTile c, int distancia)
         {
             for (int i = 0; i < Colunas; i++)
@@ -292,12 +226,49 @@ namespace MainPrototype
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(phase == Phase.INICIO)
+            if (phase == Phase.INICIO)
             {
                 CleanTilesMinusEntities();
-            }else if(phase == Phase.MOVIMENTACAO)
+            } else if (phase == Phase.MOVIMENTACAO)
             {
-                ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed);
+                if (moved)
+                {
+                    deltaX = Statics.Player.X - TargetTile.x;
+                    deltaY = Statics.Player.Y - TargetTile.y;
+                    if (!(deltaX == 0 && deltaY == 0))
+                    {
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Color.Chocolate;
+                        if (deltaX < 0)
+                        {
+                            Statics.Player.X++;
+                        }
+                        else if (deltaX > 0)
+                        {
+                            Statics.Player.X--;
+                        }
+                        else if (deltaY < 0)
+                        {
+                            Statics.Player.Y++;
+                        }
+                        else if (deltaY > 0)
+                        {
+                            Statics.Player.Y--;
+                        }
+                        speedLeft--;
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
+                    }
+                    else
+                    {
+                        moved = false;
+                        phase = Phase.ATAQUE;
+                    }
+                }
+                else
+                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed);
+
+                
+
             }else if(phase == Phase.ATAQUE)
             {
                 for (int i = 0; i < Colunas; i++)
@@ -331,16 +302,48 @@ namespace MainPrototype
                                 MatrizTiles[i, j].isLocked = true;
                             }
                         }
-                        // choosingAtk = true;
                     }
                 }
             }
             else if(phase == Phase.RECUO)
             {
-                ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
+                if (moved)
+                {
+                    deltaX = Statics.Player.X - TargetTile.x;
+                    deltaY = Statics.Player.Y - TargetTile.y;
+                    if (!(deltaX == 0 && deltaY == 0))
+                    {
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Color.Chocolate;
+                        if (deltaX < 0)
+                        {
+                            Statics.Player.X++;
+                        }
+                        else if (deltaX > 0)
+                        {
+                            Statics.Player.X--;
+                        }
+                        else if (deltaY < 0)
+                        {
+                            Statics.Player.Y++;
+                        }
+                        else if (deltaY > 0)
+                        {
+                            Statics.Player.Y--;
+                        }
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
+                    }
+                    else
+                    {
+                        moved = false;
+                        phase = Phase.ENEMYMOV;
+                    }
+                }
+                else
+                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
             }else if(phase == Phase.ENEMYMOV)
             {
-                BackColor = Color.MediumVioletRed;
+                BackColor = Color.Black;
                 if (monstercounter < NumMonters)
                 {
                     //Mover monster
@@ -487,18 +490,56 @@ namespace MainPrototype
                     if (((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0))
                     {
                         Statics.UpdatePlayer(monsters[monstercounter].Attack(Statics.Player));
+                        NudgeMe();
                     }
-                    //MessageBox.Show(Statics.Player.Hp + "");
                     monstercounter++;
                 }
                 else
                 {
-                    MessageBox.Show(Statics.Player.Hp + "");
+                    Debug.WriteLine(Statics.Player.Hp.ToString());
                     monstercounter = 0;
                     phase = Phase.MOVIMENTACAO;
                 }
             }
 
+            foreach(var m in monsters)
+            {
+                if (m.Hp <= 0)
+                {
+                    MatrizTiles[m.X, m.Y].isMonster = false;
+                    MatrizTiles[m.X, m.Y].BackColor = Color.CadetBlue;
+                    monsters.Remove(m);
+                    break;
+                }
+                else
+                {
+                    MatrizTiles[m.X, m.Y].PutMonster();
+                }
+            }
+        }
+
+        public void NudgeMe()
+        {
+            // Store the original location of the form.
+            int xCoord = this.Left;
+            int yCoord = this.Top;
+            // An integer for storing the random number each time
+            int rnd = 0;
+            
+            // Instantiate the random generation mechanism
+            Random RandomClass = new Random();
+
+            for (int i = 0; i <= 100; i++)
+            {
+                rnd = RandomClass.Next(xCoord + 1, xCoord + 15);
+                this.Left = rnd;
+                rnd = RandomClass.Next(yCoord + 1, yCoord + 15);
+                this.Top = rnd;
+            }
+
+            // Restore the original location of the form
+            this.Left = xCoord;
+            this.Top = yCoord;
         }
     }
 }
