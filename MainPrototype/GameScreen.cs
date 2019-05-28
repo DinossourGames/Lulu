@@ -46,6 +46,7 @@ namespace MainPrototype
 
         CustomTile[,] MatrizTiles;
         List<Monster> monsters;
+        Point initialPosition;
 
         private int tries;
         private int deltaX;
@@ -59,6 +60,7 @@ namespace MainPrototype
             MatrizTiles = new CustomTile[Colunas, Linhas];
             monsters = new List<Monster>();
             phase = Phase.INICIO;
+            initialPosition = this.Location;
 
             timer1.Interval = 33;
             timer1.Start();
@@ -103,8 +105,11 @@ namespace MainPrototype
                                 {                                   
                                     score++;
                                     SpawnRandomMonster();
-                                    
-                                    //NumMonters--;
+                                    if(score > 0 && score%5 == 0)
+                                    {
+                                        SpawnRandomMonster();
+                                        NumMonters++;
+                                    }
                                     break;
                                 }
                             }
@@ -137,26 +142,20 @@ namespace MainPrototype
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < NumMonters; i++)
-            {
-                
-                SpawnRandomMonster();
-            }
             for (int i = 0; i < Colunas; i++)
             {
                 for (int j = 0; j < Linhas; j++)
                 {
-                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Color.CadetBlue);
-                    for (int k = 0; k < NumMonters; k++)
-                    {
-                        if (a.x == monsters[k].X && a.y == monsters[k].Y)
-                            a.PutMonster();
-
-                    }
+                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Color.CadetBlue);                   
                     a.Click += new EventHandler(TileClick);
                     MatrizTiles[i, j] = a;
                     Controls.Add(a);
                 }
+            }
+            for (int i = 0; i < NumMonters; i++)
+            {
+                
+                SpawnRandomMonster();
             }
         }
 
@@ -178,15 +177,23 @@ namespace MainPrototype
 
         public void SpawnRandomMonster()
         {
-            int MonsX, MonsY; double MonsHp;
+            bool free = false;
+            int MonsX= 0, MonsY =0; double MonsHp;
             MonsHp = Math.Ceiling(10.0 * (1 + (score / 10)));
             MonsHp = r.Next(Convert.ToInt32(MonsHp) - 5, Convert.ToInt32(MonsHp) + 6);
-            MonsX = r.Next(0, colunas);
-            MonsY = r.Next(0, linhas);
+            while (!free)
+            {
+                MonsX = r.Next(0, colunas);
+                MonsY = r.Next(0, linhas);
+                if (!MatrizTiles[MonsX, MonsY].isMonster && !MatrizTiles[MonsX, MonsY].isPlayer)
+                    free = true;
+            }
             var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), MonsX, MonsY);
             Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
             monsters.Add(monsterToAdd);
+            MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster();
         }
+
         public void ShowMovementOptions(CustomTile c, int distancia)
         {
             for (int i = 0; i < Colunas; i++)
@@ -194,7 +201,7 @@ namespace MainPrototype
                 for (int j = 0; j < Linhas; j++)
                 {
 
-                    if (Math.Abs(c.x - MatrizTiles[i, j].x) + Math.Abs(c.y - MatrizTiles[i, j].y) < distancia)
+                    if (Math.Abs(c.x - MatrizTiles[i, j].x) + Math.Abs(c.y - MatrizTiles[i, j].y) < distancia+1)
                     {
 
                         if (MatrizTiles[i, j].isPlayer)
@@ -307,6 +314,7 @@ namespace MainPrototype
             }
             else if(phase == Phase.RECUO)
             {
+                
                 if (moved)
                 {
                     deltaX = Statics.Player.X - TargetTile.x;
@@ -490,7 +498,7 @@ namespace MainPrototype
                     if (((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0))
                     {
                         Statics.UpdatePlayer(monsters[monstercounter].Attack(Statics.Player));
-                        NudgeMe();
+                        ShakeScreen();
                     }
                     monstercounter++;
                 }
@@ -501,7 +509,12 @@ namespace MainPrototype
                     phase = Phase.MOVIMENTACAO;
                 }
             }
-
+            if(Statics.Player.Hp <= 0)
+            {
+                timer1.Stop();
+                MessageBox.Show("Game over");
+                this.Close();
+            }
             foreach(var m in monsters)
             {
                 if (m.Hp <= 0)
@@ -516,18 +529,18 @@ namespace MainPrototype
                     MatrizTiles[m.X, m.Y].PutMonster();
                 }
             }
+
+            initialPosition = this.Location;
         }
 
-        public void NudgeMe()
+        public void ShakeScreen()
         {
-            // Store the original location of the form.
             int xCoord = this.Left;
             int yCoord = this.Top;
-            // An integer for storing the random number each time
             int rnd = 0;
             
-            // Instantiate the random generation mechanism
             Random RandomClass = new Random();
+
 
             for (int i = 0; i <= 100; i++)
             {
@@ -537,9 +550,93 @@ namespace MainPrototype
                 this.Top = rnd;
             }
 
-            // Restore the original location of the form
             this.Left = xCoord;
             this.Top = yCoord;
         }
+
+        //public void FocusHere(int x, int y)
+        //{
+        //    timer1.Stop();
+
+        //    Point focus = new Point(x, y);
+
+        //    int difX = this.Location.X - focus.X;
+        //    int difY = this.Location.Y - focus.Y;
+
+        //    while(difX != 0 || difY != 0)
+        //    {
+        //        if(difX != 0 && difY != 0)
+        //        {
+        //            if (difX < 0)
+        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
+        //            else
+        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
+
+        //            if (difY < 0)
+        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
+        //            else
+        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
+
+        //        }
+        //        else if(difX != 0)
+        //        {
+        //            if (difX < 0)
+        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
+        //            else
+        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
+        //        }
+        //        else if(difY != 0)
+        //        {
+        //            if (difY < 0)
+        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
+        //            else
+        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
+        //        }
+        //        difX = this.Location.X - focus.X;
+        //        difY = this.Location.Y - focus.Y;
+        //    }
+
+
+        //}
+
+        //public void Unfocus()
+        //{
+        //    int difX = this.Location.X - initialPosition.X;
+        //    int difY = this.Location.Y - initialPosition.Y;
+
+        //    while (difX != 0 || difY != 0)
+        //    {
+        //        if (difX != 0 && difY != 0)
+        //        {
+        //            if (difX < 0)
+        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
+        //            else
+        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
+
+        //            if (difY < 0)
+        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
+        //            else
+        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
+
+        //        }
+        //        else if (difX != 0)
+        //        {
+        //            if (difX < 0)
+        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
+        //            else
+        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
+        //        }
+        //        else if (difY != 0)
+        //        {
+        //            if (difY < 0)
+        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
+        //            else
+        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
+        //        }
+        //        difX = this.Location.X - initialPosition.X;
+        //        difY = this.Location.Y - initialPosition.Y;
+        //    }
+        //    timer1.Start();
+        //}
     }
 }

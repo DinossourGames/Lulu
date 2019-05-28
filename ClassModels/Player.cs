@@ -13,7 +13,7 @@ namespace ClassModels
         public int Def { get;  set; }
         public int X { get;  set; }
         public int Y { get;  set; }
-        public int Speed { get; set; } = 5;
+        public int Speed { get; set; } = 4;
         public int Range { get; set; } = 3;
 
         public Player()

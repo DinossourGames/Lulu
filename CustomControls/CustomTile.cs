@@ -41,10 +41,10 @@ namespace CustomControls
             this.x = x;
             this.y = y;
             this.isLocked = isLocked;
-            this.Height = size;
-            this.Width = size;
-            this.BackColor = back;
-            this.Location = new Point(coordenadaX, coordenadaY);
+            Height = size;
+            Width = size;
+            BackColor = back;
+            Location = new Point(coordenadaX, coordenadaY);
             
         }
 
