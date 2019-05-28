@@ -115,7 +115,7 @@ namespace MainPrototype
                                     }
                                     if(Statics.Player.Luck <= r.Next(1, 101))
                                     {
-                                        Statics.Player.Hp += Convert.ToInt32(Statics.Player.MaxHp * 0.1);
+                                        Statics.UpdatePlayer(Convert.ToInt32(Statics.Player.MaxHp * 0.1));
                                         Debug.WriteLine(Statics.Player.Hp.ToString());
                                     }
                                     break;
@@ -222,7 +222,7 @@ namespace MainPrototype
                         }
                         else
                         {
-                            MatrizTiles[i, j].BackColor = Color.Chocolate;
+                            MatrizTiles[i, j].BackColor = Statics.MovColor;
                             MatrizTiles[i, j].isLocked = false;
                         }
                     }
@@ -254,7 +254,7 @@ namespace MainPrototype
                     if (!(deltaX == 0 && deltaY == 0))
                     {
                         MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Color.Chocolate;
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
                         if (deltaX < 0)
                         {
                             Statics.Player.X++;
@@ -331,7 +331,7 @@ namespace MainPrototype
                     if (!(deltaX == 0 && deltaY == 0))
                     {
                         MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Color.Chocolate;
+                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
                         if (deltaX < 0)
                         {
                             Statics.Player.X++;
@@ -530,7 +530,7 @@ namespace MainPrototype
                 if (m.Hp <= 0)
                 {
                     MatrizTiles[m.X, m.Y].isMonster = false;
-                    MatrizTiles[m.X, m.Y].BackColor = Color.CadetBlue;
+                    MatrizTiles[m.X, m.Y].BackColor = Color.White;
                     monsters.Remove(m);
                     break;
                 }

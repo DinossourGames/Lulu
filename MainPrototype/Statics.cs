@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace MainPrototype
 {
@@ -12,6 +13,15 @@ namespace MainPrototype
         #region Properties
         public static Player Player { get; private set; }
 
+        public static Color emptyTileColor = Color.CadetBlue;
+
+        public static Color playerColor = Color.Red;
+
+        public static Color enemyColor = Color.DarkCyan;
+
+        public static Color MovColor = Color.Chocolate;
+
+        public static Color AtkRangeColor = Color.Aqua;
         #endregion
 
 
@@ -60,6 +70,15 @@ namespace MainPrototype
         {
             Player.X = X;
             Player.Y = Y;
+        }
+        public static void UpdatePlayer(int hp)
+        {
+            if (hp > Player.MaxHp)
+                Player.Hp = Player.MaxHp;
+            else
+            {
+                Player.Hp = hp;
+            }
         }
         /// <summary>
         /// Esta função salva o player.
