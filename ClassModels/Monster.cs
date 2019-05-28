@@ -8,20 +8,26 @@ namespace ClassModels
 {
     public class Monster
     {
-        public double Hp { get; set; }
+        public int Hp { get; set; }
+        public int Atk { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
-        public Monster(int hp,int x, int y)
+        public Monster(int hp, int atk,int x, int y)
         {
             Hp = hp;
+            Atk = atk;
             X = x;
             Y = y;
         }
 
         public Player Attack(Player p)
         {
-            p.Hp --;
+            Random r = new Random();
+            if (Convert.ToInt32(r.Next(1, 6) * (Atk / p.Def)) <= 0)
+                p.Hp -= 1;
+            else
+                p.Hp -=Convert.ToInt32(r.Next(1,6) * (Atk/p.Def));
             
             return p;
         }

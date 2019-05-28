@@ -35,9 +35,9 @@ namespace MainPrototype
             return Player;
         }
 
-        public static Player CreateNewPlayer(int Hp,int Atk, int Def, int X, int Y, int speed, int range)
+        public static Player CreateNewPlayer(int Hp,int Atk, int Def, int X, int Y, int speed, int range, int luck)
         {
-            Player = new Player(Hp,Atk,Def,X,Y, speed, range);
+            Player = new Player(Hp,Hp,Atk,Def,X,Y, speed, range, luck);
             return Player;
         }
 
@@ -47,6 +47,14 @@ namespace MainPrototype
         public static void UpdatePlayer(Player p)
         {
             Player = p;
+            if (Player.Atk <= 0)
+                Player.Atk = 1;
+            if (Player.Def <= 0)
+                Player.Def = 1;
+            if (Player.Speed < 0)
+                Player.Speed = 0;
+            if (Player.Range <= 0)
+                Player.Range = 1;
         }
         public static void UpdatePlayer(int X,int Y)
         {

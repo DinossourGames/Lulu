@@ -42,6 +42,8 @@ namespace MainPrototype
         public int Linhas { get => linhas; set => linhas = value; }
         public int passosdados { get; private set; } = 0;
         public int monstercounter { get; private set; } = 0;
+        public int turn { get; private set; }
+
         public CustomTile TargetTile;
 
         CustomTile[,] MatrizTiles;
@@ -61,7 +63,7 @@ namespace MainPrototype
             monsters = new List<Monster>();
             phase = Phase.INICIO;
             initialPosition = this.Location;
-
+            Statics.CreateNewPlayer(20, 100, 100, 0, 0, 4, 2, 50);
             timer1.Interval = 33;
             timer1.Start();
         }
@@ -76,6 +78,7 @@ namespace MainPrototype
                 c.PutPlayer();
                 Statics.UpdatePlayer(c.x, c.y);
                 phase = Phase.MOVIMENTACAO;
+                turn++;
             }
             //Turno de movimento
             else if (phase == Phase.MOVIMENTACAO)
@@ -109,6 +112,11 @@ namespace MainPrototype
                                     {
                                         SpawnRandomMonster();
                                         NumMonters++;
+                                    }
+                                    if(Statics.Player.Luck <= r.Next(1, 101))
+                                    {
+                                        Statics.Player.Hp += Convert.ToInt32(Statics.Player.MaxHp * 0.1);
+                                        Debug.WriteLine(Statics.Player.Hp.ToString());
                                     }
                                     break;
                                 }
@@ -178,9 +186,10 @@ namespace MainPrototype
         public void SpawnRandomMonster()
         {
             bool free = false;
-            int MonsX= 0, MonsY =0; double MonsHp;
+            int MonsX= 0, MonsY =0; double MonsHp, monsAtk;
             MonsHp = Math.Ceiling(10.0 * (1 + (score / 10)));
             MonsHp = r.Next(Convert.ToInt32(MonsHp) - 5, Convert.ToInt32(MonsHp) + 6);
+            monsAtk = Math.Ceiling(1.0 + (score / 10));
             while (!free)
             {
                 MonsX = r.Next(0, colunas);
@@ -188,7 +197,7 @@ namespace MainPrototype
                 if (!MatrizTiles[MonsX, MonsY].isMonster && !MatrizTiles[MonsX, MonsY].isPlayer)
                     free = true;
             }
-            var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), MonsX, MonsY);
+            var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), Convert.ToInt32(monsAtk), MonsX, MonsY);
             Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
             monsters.Add(monsterToAdd);
             MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster();
@@ -283,7 +292,7 @@ namespace MainPrototype
                     for (int j = 0; j < Linhas; j++)
                     {
 
-                        if ( Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.Range)
+                        if ( Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.Range+1)
                         {
 
                             if (MatrizTiles[i, j].isPlayer)
@@ -507,6 +516,7 @@ namespace MainPrototype
                     Debug.WriteLine(Statics.Player.Hp.ToString());
                     monstercounter = 0;
                     phase = Phase.MOVIMENTACAO;
+                    turn++;
                 }
             }
             if(Statics.Player.Hp <= 0)
@@ -544,9 +554,9 @@ namespace MainPrototype
 
             for (int i = 0; i <= 100; i++)
             {
-                rnd = RandomClass.Next(xCoord + 1, xCoord + 15);
+                rnd = RandomClass.Next(xCoord - 15, xCoord + 15);
                 this.Left = rnd;
-                rnd = RandomClass.Next(yCoord + 1, yCoord + 15);
+                rnd = RandomClass.Next(yCoord - 15, yCoord + 15);
                 this.Top = rnd;
             }
 
