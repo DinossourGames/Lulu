@@ -28,9 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.monsterHp = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // monsterHp
+            // 
+            this.monsterHp.AutoSize = true;
+            this.monsterHp.BackColor = System.Drawing.Color.Transparent;
+            this.monsterHp.ForeColor = System.Drawing.Color.White;
+            this.monsterHp.Location = new System.Drawing.Point(0, 0);
+            this.monsterHp.Name = "monsterHp";
+            this.monsterHp.Size = new System.Drawing.Size(100, 23);
+            this.monsterHp.TabIndex = 0;
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label monsterHp;
     }
 }

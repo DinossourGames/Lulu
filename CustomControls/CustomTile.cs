@@ -12,6 +12,15 @@ namespace CustomControls
 {
     public partial class CustomTile : PictureBox
     {
+        private string vida;
+
+        public string Vida
+        {
+            get { return monsterHp.Text; }
+            set { monsterHp.Text = value; }
+        }
+
+
         [Browsable(true)]
         [Category("CustomProps")]
         public int x { get; private set; }
@@ -33,6 +42,7 @@ namespace CustomControls
         public bool isMonster { get; set; } = false;
         public CustomTile()
         {
+            
             InitializeComponent();
         }
 
@@ -59,10 +69,10 @@ namespace CustomControls
             this.BackColor = Color.Red;
         }
 
-        public void PutMonster()
+        public void PutMonster(int hp)
         {
             isMonster = true;
-            this.BackColor = Color.DarkCyan;
+            vida = hp.ToString();
         }
     }
 }

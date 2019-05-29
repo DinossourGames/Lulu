@@ -48,7 +48,6 @@ namespace MainPrototype
 
         CustomTile[,] MatrizTiles;
         List<Monster> monsters;
-        Point initialPosition;
 
         private int tries;
         private int deltaX;
@@ -62,8 +61,9 @@ namespace MainPrototype
             MatrizTiles = new CustomTile[Colunas, Linhas];
             monsters = new List<Monster>();
             phase = Phase.INICIO;
-            initialPosition = this.Location;
-            Statics.CreateNewPlayer(20, 100, 100, 0, 0, 4, 2, 50);
+            Statics.CreateNewPlayer(20, 10, 100, 0, 0, 4, 2, 50);
+            Statics.GenerateModifiers();
+            speedLeft = Statics.Player.Speed;
             timer1.Interval = 33;
             timer1.Start();
         }
@@ -154,7 +154,7 @@ namespace MainPrototype
             {
                 for (int j = 0; j < Linhas; j++)
                 {
-                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Color.CadetBlue);                   
+                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Statics.emptyTileColor);                   
                     a.Click += new EventHandler(TileClick);
                     MatrizTiles[i, j] = a;
                     Controls.Add(a);
@@ -174,11 +174,11 @@ namespace MainPrototype
                 for (int j = 0; j < Linhas; j++)
                 {
 
-                    MatrizTiles[i, j].BackColor = Color.CadetBlue;
+                    MatrizTiles[i, j].BackColor = Statics.emptyTileColor;
                     if (MatrizTiles[i, j].isPlayer)
-                        MatrizTiles[i, j].BackColor = Color.Red;
+                        MatrizTiles[i, j].BackColor = Statics.playerColor;
                     if (MatrizTiles[i, j].isMonster)
-                        MatrizTiles[i, j].BackColor = Color.DarkCyan;
+                        MatrizTiles[i, j].BackColor = Statics.enemyColor;
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace MainPrototype
             var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), Convert.ToInt32(monsAtk), MonsX, MonsY);
             Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
             monsters.Add(monsterToAdd);
-            MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster();
+            MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster(monsterToAdd.Hp);
         }
 
         public void ShowMovementOptions(CustomTile c, int distancia)
@@ -214,10 +214,10 @@ namespace MainPrototype
                     {
 
                         if (MatrizTiles[i, j].isPlayer)
-                            MatrizTiles[i, j].BackColor = Color.Red;
+                            MatrizTiles[i, j].BackColor = Statics.playerColor;
                         else if (MatrizTiles[i, j].isMonster)
                         {
-                            MatrizTiles[i, j].BackColor = Color.DarkCyan;
+                            MatrizTiles[i, j].BackColor = Statics.enemyColor;
                             MatrizTiles[i, j].isLocked = true;
                         }
                         else
@@ -229,15 +229,31 @@ namespace MainPrototype
                     else
                     {
                         if (MatrizTiles[i, j].isMonster)
-                            MatrizTiles[i, j].BackColor = Color.DarkCyan;
+                            MatrizTiles[i, j].BackColor = Statics.enemyColor;
                         else
                         {
-                            MatrizTiles[i, j].BackColor = Color.CadetBlue;
+                            MatrizTiles[i, j].BackColor = Statics.emptyTileColor;
                             MatrizTiles[i, j].isLocked = true;
                         }
                     }
                 }
             }
+        }
+
+        public void UpdateUI()
+        {
+            hpLabel.Text = Statics.Player.Hp + "/" + Statics.Player.MaxHp;
+            AtkLabel.Text = Statics.Player.Atk.ToString();
+            DefLabel.Text = Statics.Player.Def.ToString();
+            SpeedLabel.Text = speedLeft + "/" + Statics.Player.Speed;
+            RangeLabel.Text = Statics.Player.Range.ToString();
+            LuckLabel.Text = Statics.Player.Luck + "%";
+
+            HpModLbl.Text = "+"+Statics.Modificadores.Hp;
+            AtkModLbl.Text = "+" + Statics.Modificadores.Atk;
+            DefModLbl.Text = "+" + Statics.Modificadores.Def;
+            SpeedModLbl.Text = "+" + Statics.Modificadores.MovSpeed;
+            LuckModLbl.Text = "+" + Statics.Modificadores.AtkRange;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -296,25 +312,25 @@ namespace MainPrototype
                         {
 
                             if (MatrizTiles[i, j].isPlayer)
-                                MatrizTiles[i, j].BackColor = Color.Red;
+                                MatrizTiles[i, j].BackColor = Statics.playerColor;
                             else if (MatrizTiles[i, j].isMonster)
                             {
-                                MatrizTiles[i, j].BackColor = Color.DarkCyan;
+                                MatrizTiles[i, j].BackColor = Statics.enemyColor;
                                 MatrizTiles[i, j].isLocked = false;
                             }
                             else
                             {
-                                MatrizTiles[i, j].BackColor = Color.Aqua;
+                                MatrizTiles[i, j].BackColor = Statics.AtkRangeColor;
                                 MatrizTiles[i, j].isLocked = false;
                             }
                         }
                         else
                         {
                             if (MatrizTiles[i, j].isMonster)
-                                MatrizTiles[i, j].BackColor = Color.DarkCyan;
+                                MatrizTiles[i, j].BackColor = Statics.enemyColor;
                             else
                             {
-                                MatrizTiles[i, j].BackColor = Color.CadetBlue;
+                                MatrizTiles[i, j].BackColor = Statics.emptyTileColor;
                                 MatrizTiles[i, j].isLocked = true;
                             }
                         }
@@ -353,6 +369,7 @@ namespace MainPrototype
                     else
                     {
                         moved = false;
+                        speedLeft = Statics.Player.Speed;
                         phase = Phase.ENEMYMOV;
                     }
                 }
@@ -480,7 +497,7 @@ namespace MainPrototype
                             deltaX = monsters[monstercounter].X - Statics.Player.X;
                             deltaY = monsters[monstercounter].Y - Statics.Player.Y;
                         }
-                        MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].PutMonster();
+                        MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].PutMonster(monsters[monstercounter].Hp);
                         CleanTilesMinusEntities();
                         passosdados++;
                     }
@@ -507,24 +524,23 @@ namespace MainPrototype
                     if (((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0))
                     {
                         Statics.UpdatePlayer(monsters[monstercounter].Attack(Statics.Player));
+                        hpLabel.ForeColor = Color.DarkRed;
+                        hpLabel.Font = new Font("Arial", 24, FontStyle.Bold);
                         ShakeScreen();
                     }
                     monstercounter++;
                 }
                 else
                 {
+                    hpLabel.ForeColor = Color.Black;
+                    hpLabel.Font = new Font("Arial", 16, FontStyle.Regular);
                     Debug.WriteLine(Statics.Player.Hp.ToString());
                     monstercounter = 0;
                     phase = Phase.MOVIMENTACAO;
                     turn++;
                 }
             }
-            if(Statics.Player.Hp <= 0)
-            {
-                timer1.Stop();
-                MessageBox.Show("Game over");
-                this.Close();
-            }
+            UpdateUI(); 
             foreach(var m in monsters)
             {
                 if (m.Hp <= 0)
@@ -536,11 +552,17 @@ namespace MainPrototype
                 }
                 else
                 {
-                    MatrizTiles[m.X, m.Y].PutMonster();
+                    MatrizTiles[m.X, m.Y].PutMonster(m.Hp);
                 }
             }
+            if(Statics.Player.Hp <= 0)
+            {
+                timer1.Stop();
+                MessageBox.Show("Game over");
+                this.Close();
+            }
 
-            initialPosition = this.Location;
+
         }
 
         public void ShakeScreen()
@@ -564,89 +586,5 @@ namespace MainPrototype
             this.Top = yCoord;
         }
 
-        //public void FocusHere(int x, int y)
-        //{
-        //    timer1.Stop();
-
-        //    Point focus = new Point(x, y);
-
-        //    int difX = this.Location.X - focus.X;
-        //    int difY = this.Location.Y - focus.Y;
-
-        //    while(difX != 0 || difY != 0)
-        //    {
-        //        if(difX != 0 && difY != 0)
-        //        {
-        //            if (difX < 0)
-        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
-        //            else
-        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
-
-        //            if (difY < 0)
-        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
-        //            else
-        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
-
-        //        }
-        //        else if(difX != 0)
-        //        {
-        //            if (difX < 0)
-        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
-        //            else
-        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
-        //        }
-        //        else if(difY != 0)
-        //        {
-        //            if (difY < 0)
-        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
-        //            else
-        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
-        //        }
-        //        difX = this.Location.X - focus.X;
-        //        difY = this.Location.Y - focus.Y;
-        //    }
-
-
-        //}
-
-        //public void Unfocus()
-        //{
-        //    int difX = this.Location.X - initialPosition.X;
-        //    int difY = this.Location.Y - initialPosition.Y;
-
-        //    while (difX != 0 || difY != 0)
-        //    {
-        //        if (difX != 0 && difY != 0)
-        //        {
-        //            if (difX < 0)
-        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
-        //            else
-        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
-
-        //            if (difY < 0)
-        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
-        //            else
-        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
-
-        //        }
-        //        else if (difX != 0)
-        //        {
-        //            if (difX < 0)
-        //                this.Location = new Point(this.Location.X - 1, this.Location.Y);
-        //            else
-        //                this.Location = new Point(this.Location.X + 1, this.Location.Y);
-        //        }
-        //        else if (difY != 0)
-        //        {
-        //            if (difY < 0)
-        //                this.Location = new Point(this.Location.X, this.Location.Y - 1);
-        //            else
-        //                this.Location = new Point(this.Location.X, this.Location.Y + 1);
-        //        }
-        //        difX = this.Location.X - initialPosition.X;
-        //        difY = this.Location.Y - initialPosition.Y;
-        //    }
-        //    timer1.Start();
-        //}
     }
 }

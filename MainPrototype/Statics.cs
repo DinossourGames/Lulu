@@ -13,21 +13,34 @@ namespace MainPrototype
         #region Properties
         public static Player Player { get; private set; }
 
-        public static Color emptyTileColor = Color.CadetBlue;
+        public static Color emptyTileColor = Color.FromArgb(80, 166, 166, 166);
 
-        public static Color playerColor = Color.Red;
+        public static Color playerColor = Color.FromArgb(0, 77, 0);
 
-        public static Color enemyColor = Color.DarkCyan;
+        public static Color enemyColor = Color.FromArgb(128, 0, 0);
 
-        public static Color MovColor = Color.Chocolate;
+        public static Color MovColor = Color.FromArgb(51, 204, 51);
 
-        public static Color AtkRangeColor = Color.Aqua;
+        public static Color AtkRangeColor = Color.FromArgb(51, 153, 255);
+
+        public static Atributos Modificadores { get; private set; }
+
         #endregion
 
 
         #region Static Methods
 
         //Create
+
+        public static Atributos GenerateModifiers()
+        {
+            Modificadores = new Atributos(0, 0, 0, 0, Player.Range, 0);
+
+            return Modificadores;
+        }
+
+
+
 
         /// <summary>
         /// Cria uma nova instancia de Player que irá persistir em tempo de execução
@@ -71,14 +84,11 @@ namespace MainPrototype
             Player.X = X;
             Player.Y = Y;
         }
-        public static void UpdatePlayer(int hp)
+        public static void UpdatePlayer(int mod)
         {
-            if (hp > Player.MaxHp)
-                Player.Hp = Player.MaxHp;
-            else
-            {
-                Player.Hp = hp;
-            }
+            Player.Hp += mod;
+            if (mod > Player.MaxHp)
+                Player.Hp = Player.MaxHp;           
         }
         /// <summary>
         /// Esta função salva o player.

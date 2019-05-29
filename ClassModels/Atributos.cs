@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClassModels
 {
-    class Atributos
+    public class Atributos
     {
         public int Hp { get; set; }
         public int Atk { get; set; }
@@ -14,6 +14,10 @@ namespace ClassModels
         public int MovSpeed { get; set; }
         public int AtkRange { get; set; }
         public int Luck { get; set; }
+
+        public Atributos()
+        {
+        }
 
         public Atributos(int hp, int atk, int def, int movSpeed, int atkRange, int luck)
         {
