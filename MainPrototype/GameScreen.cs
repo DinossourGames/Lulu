@@ -60,6 +60,7 @@ namespace MainPrototype
             Statics.CreateNewPlayer();
             MatrizTiles = new CustomTile[Colunas, Linhas];
             monsters = new List<Monster>();
+            patricioPic.Image = Properties.Resources.Patricio;
             phase = Phase.INICIO;
             Statics.CreateNewPlayer(20, 10, 100, 0, 0, 4, 2, 50);
             Statics.GenerateModifiers();
@@ -165,6 +166,8 @@ namespace MainPrototype
                 
                 SpawnRandomMonster();
             }
+
+            MessageBox.Show("Bem-vindo, nobre guerreiro, ao campo de batalha!");
         }
 
         public void CleanTilesMinusEntities()
@@ -201,6 +204,7 @@ namespace MainPrototype
             Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
             monsters.Add(monsterToAdd);
             MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster(monsterToAdd.Hp);
+            MatrizTiles[monsterToAdd.X, monsterToAdd.Y].isLocked = true;
         }
 
         public void ShowMovementOptions(CustomTile c, int distancia)
@@ -242,6 +246,20 @@ namespace MainPrototype
 
         public void UpdateUI()
         {
+            if (Statics.Player.Hp <= Statics.Player.MaxHp * 0.25)
+            {
+                patricioPic.Image = Properties.Resources.Machucado;
+                if (hpLabel.ForeColor == Color.DarkRed)
+                    hpLabel.ForeColor = Color.Red;
+                else
+                    hpLabel.ForeColor = Color.DarkRed;
+            }
+            else
+                patricioPic.Image = Properties.Resources.Patricio;
+
+            turnLabel.Text = "Turno: " + turn;
+            PointLabel.Text = "Pontos: " + score;
+
             hpLabel.Text = Statics.Player.Hp + "/" + Statics.Player.MaxHp;
             AtkLabel.Text = Statics.Player.Atk.ToString();
             DefLabel.Text = Statics.Player.Def.ToString();
@@ -253,7 +271,7 @@ namespace MainPrototype
             AtkModLbl.Text = "+" + Statics.Modificadores.Atk;
             DefModLbl.Text = "+" + Statics.Modificadores.Def;
             SpeedModLbl.Text = "+" + Statics.Modificadores.MovSpeed;
-            LuckModLbl.Text = "+" + Statics.Modificadores.AtkRange;
+            LuckModLbl.Text = "+" + Statics.Modificadores.Luck;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -377,7 +395,7 @@ namespace MainPrototype
                     ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
             }else if(phase == Phase.ENEMYMOV)
             {
-                BackColor = Color.Black;
+                BackColor = Color.FromArgb(70, 44, 99);
                 if (monstercounter < NumMonters)
                 {
                     //Mover monster
@@ -586,5 +604,14 @@ namespace MainPrototype
             this.Top = yCoord;
         }
 
+        private void close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 }

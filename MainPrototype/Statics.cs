@@ -17,7 +17,7 @@ namespace MainPrototype
 
         public static Color playerColor = Color.FromArgb(0, 77, 0);
 
-        public static Color enemyColor = Color.FromArgb(128, 0, 0);
+        public static Color enemyColor = Color.FromArgb(130, 85, 162);
 
         public static Color MovColor = Color.FromArgb(51, 204, 51);
 

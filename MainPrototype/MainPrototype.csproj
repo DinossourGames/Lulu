@@ -66,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -89,6 +90,21 @@
       <Project>{D5F64EE8-C64A-4259-81C0-F5C029C45028}</Project>
       <Name>CustomControls</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Patricio.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Machucado.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Nomezinho.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\multiply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus_48px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

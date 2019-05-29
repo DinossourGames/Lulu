@@ -16,8 +16,11 @@ namespace CustomControls
 
         public string Vida
         {
-            get { return monsterHp.Text; }
-            set { monsterHp.Text = value; }
+            get { return monsterHp.Text;
+            }
+            set { monsterHp.Text = value;
+                monsterHp.Visible = true;
+            }
         }
 
 
