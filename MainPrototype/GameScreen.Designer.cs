@@ -92,71 +92,78 @@
             // hpLabel
             // 
             this.hpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hpLabel.Location = new System.Drawing.Point(843, 101);
+            this.hpLabel.Location = new System.Drawing.Point(857, 101);
             this.hpLabel.Name = "hpLabel";
-            this.hpLabel.Size = new System.Drawing.Size(62, 33);
+            this.hpLabel.Size = new System.Drawing.Size(97, 33);
             this.hpLabel.TabIndex = 7;
             this.hpLabel.Text = "0/0";
+            this.hpLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // AtkLabel
             // 
             this.AtkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AtkLabel.Location = new System.Drawing.Point(843, 140);
+            this.AtkLabel.Location = new System.Drawing.Point(858, 138);
             this.AtkLabel.Name = "AtkLabel";
-            this.AtkLabel.Size = new System.Drawing.Size(62, 33);
+            this.AtkLabel.Size = new System.Drawing.Size(97, 33);
             this.AtkLabel.TabIndex = 7;
             this.AtkLabel.Text = "0";
+            this.AtkLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // DefLabel
             // 
             this.DefLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DefLabel.Location = new System.Drawing.Point(843, 179);
+            this.DefLabel.Location = new System.Drawing.Point(858, 177);
             this.DefLabel.Name = "DefLabel";
-            this.DefLabel.Size = new System.Drawing.Size(62, 33);
+            this.DefLabel.Size = new System.Drawing.Size(97, 33);
             this.DefLabel.TabIndex = 7;
             this.DefLabel.Text = "0";
+            this.DefLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // SpeedLabel
             // 
             this.SpeedLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SpeedLabel.Location = new System.Drawing.Point(843, 218);
+            this.SpeedLabel.Location = new System.Drawing.Point(858, 216);
             this.SpeedLabel.Name = "SpeedLabel";
-            this.SpeedLabel.Size = new System.Drawing.Size(62, 33);
+            this.SpeedLabel.Size = new System.Drawing.Size(97, 33);
             this.SpeedLabel.TabIndex = 7;
             this.SpeedLabel.Text = "0/0";
+            this.SpeedLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // RangeLabel
             // 
             this.RangeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RangeLabel.Location = new System.Drawing.Point(843, 257);
+            this.RangeLabel.Location = new System.Drawing.Point(858, 255);
             this.RangeLabel.Name = "RangeLabel";
-            this.RangeLabel.Size = new System.Drawing.Size(62, 33);
+            this.RangeLabel.Size = new System.Drawing.Size(97, 33);
             this.RangeLabel.TabIndex = 7;
             this.RangeLabel.Text = "0";
+            this.RangeLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // LuckLabel
             // 
             this.LuckLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LuckLabel.Location = new System.Drawing.Point(843, 296);
+            this.LuckLabel.Location = new System.Drawing.Point(858, 294);
             this.LuckLabel.Name = "LuckLabel";
-            this.LuckLabel.Size = new System.Drawing.Size(62, 33);
+            this.LuckLabel.Size = new System.Drawing.Size(97, 33);
             this.LuckLabel.TabIndex = 7;
             this.LuckLabel.Text = "0%";
+            this.LuckLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // HpModLbl
             // 
             this.HpModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HpModLbl.Location = new System.Drawing.Point(911, 109);
+            this.HpModLbl.Location = new System.Drawing.Point(973, 103);
             this.HpModLbl.Name = "HpModLbl";
-            this.HpModLbl.Size = new System.Drawing.Size(42, 25);
+            this.HpModLbl.Size = new System.Drawing.Size(42, 31);
             this.HpModLbl.TabIndex = 7;
             this.HpModLbl.Text = "+ 0";
             this.HpModLbl.Visible = false;
+            this.HpModLbl.Click += new System.EventHandler(this.HpModLbl_Click);
             // 
             // AtkModLbl
             // 
             this.AtkModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AtkModLbl.Location = new System.Drawing.Point(911, 148);
+            this.AtkModLbl.Location = new System.Drawing.Point(973, 148);
             this.AtkModLbl.Name = "AtkModLbl";
             this.AtkModLbl.Size = new System.Drawing.Size(42, 25);
             this.AtkModLbl.TabIndex = 7;
@@ -166,7 +173,7 @@
             // DefModLbl
             // 
             this.DefModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DefModLbl.Location = new System.Drawing.Point(911, 187);
+            this.DefModLbl.Location = new System.Drawing.Point(973, 187);
             this.DefModLbl.Name = "DefModLbl";
             this.DefModLbl.Size = new System.Drawing.Size(42, 25);
             this.DefModLbl.TabIndex = 7;
@@ -176,7 +183,7 @@
             // SpeedModLbl
             // 
             this.SpeedModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SpeedModLbl.Location = new System.Drawing.Point(911, 226);
+            this.SpeedModLbl.Location = new System.Drawing.Point(973, 226);
             this.SpeedModLbl.Name = "SpeedModLbl";
             this.SpeedModLbl.Size = new System.Drawing.Size(42, 25);
             this.SpeedModLbl.TabIndex = 7;
@@ -186,7 +193,7 @@
             // LuckModLbl
             // 
             this.LuckModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LuckModLbl.Location = new System.Drawing.Point(911, 304);
+            this.LuckModLbl.Location = new System.Drawing.Point(973, 304);
             this.LuckModLbl.Name = "LuckModLbl";
             this.LuckModLbl.Size = new System.Drawing.Size(42, 25);
             this.LuckModLbl.TabIndex = 7;
@@ -257,7 +264,7 @@
             // 
             this.turnLabel.AutoSize = true;
             this.turnLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.turnLabel.Location = new System.Drawing.Point(1018, 40);
+            this.turnLabel.Location = new System.Drawing.Point(1080, 40);
             this.turnLabel.Name = "turnLabel";
             this.turnLabel.Size = new System.Drawing.Size(75, 20);
             this.turnLabel.TabIndex = 9;
@@ -267,7 +274,7 @@
             // 
             this.PointLabel.AutoSize = true;
             this.PointLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PointLabel.Location = new System.Drawing.Point(1018, 65);
+            this.PointLabel.Location = new System.Drawing.Point(1080, 65);
             this.PointLabel.Name = "PointLabel";
             this.PointLabel.Size = new System.Drawing.Size(85, 20);
             this.PointLabel.TabIndex = 9;
@@ -276,7 +283,7 @@
             // minimize
             // 
             this.minimize.Image = global::MainPrototype.Properties.Resources.minus_48px;
-            this.minimize.Location = new System.Drawing.Point(1067, 0);
+            this.minimize.Location = new System.Drawing.Point(1129, 0);
             this.minimize.Name = "minimize";
             this.minimize.Size = new System.Drawing.Size(36, 31);
             this.minimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -287,7 +294,7 @@
             // close
             // 
             this.close.Image = global::MainPrototype.Properties.Resources.multiply;
-            this.close.Location = new System.Drawing.Point(1101, 0);
+            this.close.Location = new System.Drawing.Point(1163, 0);
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(36, 31);
             this.close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -330,7 +337,7 @@
             this.patricioPic.BackColor = System.Drawing.Color.Transparent;
             this.patricioPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.patricioPic.Image = ((System.Drawing.Image)(resources.GetObject("patricioPic.Image")));
-            this.patricioPic.Location = new System.Drawing.Point(959, 101);
+            this.patricioPic.Location = new System.Drawing.Point(1021, 101);
             this.patricioPic.Name = "patricioPic";
             this.patricioPic.Size = new System.Drawing.Size(178, 228);
             this.patricioPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -396,7 +403,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1139, 561);
+            this.ClientSize = new System.Drawing.Size(1199, 561);
             this.Controls.Add(this.hpLabel);
             this.Controls.Add(this.minimize);
             this.Controls.Add(this.close);
@@ -431,8 +438,10 @@
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "GameScreen";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Screen_MouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

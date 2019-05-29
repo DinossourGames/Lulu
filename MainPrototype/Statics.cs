@@ -25,6 +25,20 @@ namespace MainPrototype
 
         public static Atributos Modificadores { get; private set; }
 
+        private static MenuScreen menuScreen;
+
+        public static MenuScreen MenuScreen
+        {
+            get
+            {
+                if (menuScreen == null)
+                {
+                    menuScreen = new MenuScreen();
+                }
+                return menuScreen;
+            }
+        }
+
         #endregion
 
 
@@ -100,5 +114,8 @@ namespace MainPrototype
         }
 
         #endregion
+
+
+
     }
 }

@@ -16,7 +16,7 @@ namespace MainPrototype
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameScreen());
+            Application.Run(Statics.MenuScreen);
         }
     }
 }
