@@ -5,13 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Firebase.Database;
+using Firebase.Database.Query;
+using System.Diagnostics;
 
 namespace MainPrototype
 {
     public static class Statics
     {
         #region Properties
+        public const string BaseUrl = "https://patricioclicker.firebaseio.com/";
+        public static FirebaseClient Reference { get; set; }
         public static Player Player { get; private set; }
+        public static Player ServerPlayer { get; set; }
 
         public static Color emptyTileColor = Color.FromArgb(80, 166, 166, 166);
 
@@ -68,13 +74,13 @@ namespace MainPrototype
 
         public static Player CreateNewPlayer(Player p)
         {
-            Player = new Player();
+            Player = new Player(p);
             return Player;
         }
 
-        public static Player CreateNewPlayer(int Hp,int Atk, int Def, int X, int Y, int speed, int range, int luck)
+        public static Player CreateNewPlayer(int Hp, int Atk, int Def, int X, int Y, int speed, int range, int luck)
         {
-            Player = new Player(Hp,Hp,Atk,Def,X,Y, speed, range, luck);
+            Player = new Player(Hp, Hp, Atk, Def, X, Y, speed, range, luck);
             return Player;
         }
 
@@ -93,7 +99,7 @@ namespace MainPrototype
             if (Player.Range <= 0)
                 Player.Range = 1;
         }
-        public static void UpdatePlayer(int X,int Y)
+        public static void UpdatePlayer(int X, int Y)
         {
             Player.X = X;
             Player.Y = Y;
@@ -102,7 +108,14 @@ namespace MainPrototype
         {
             Player.Hp += mod;
             if (mod > Player.MaxHp)
-                Player.Hp = Player.MaxHp;           
+                Player.Hp = Player.MaxHp;
+        }
+        public static void UpdatePlayer()
+        {
+            Player = CreateNewPlayer(ServerPlayer);
+            Player.IsPlaying = true;
+            Player.R = 0;
+           
         }
         /// <summary>
         /// Esta função salva o player.
@@ -113,6 +126,37 @@ namespace MainPrototype
             Player = p;
         }
 
+        public async static void StartGame()
+        {
+            Reference = new FirebaseClient(BaseUrl);
+            Player.IsPlaying = true;
+            await Reference.Child("Gamedata").Child("Player").PutAsync<Player>(Player);
+            StartListenServerData();
+        }
+
+        public static void StartListenServerData()
+        {
+            Reference.Child("Gamedata").AsObservable<Player>().Subscribe(i =>
+            {
+                try
+                {
+                    if (i.Object.IsPlaying)
+                    {
+                       
+                       ServerPlayer = i.Object;
+                       
+                    }
+                }
+                catch{ }
+                
+            });
+        }
+
+        public static async Task<bool> UpdateGame()
+        {
+            await Reference.Child("Gamedata").Child("Player").PutAsync(Player).ContinueWith(r => { return r.IsFaulted == true ? false : true; });
+            return false;
+        }
         #endregion
 
 

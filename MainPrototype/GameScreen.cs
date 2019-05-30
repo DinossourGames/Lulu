@@ -196,13 +196,14 @@ namespace MainPrototype
             Statics.CreateNewPlayer(20, 10, 100, 0, 0, 4, 2, 50);
             Statics.GenerateModifiers();
             speedLeft = Statics.Player.Speed;
+            Statics.StartGame();
             timer1.Interval = 33;
             timer1.Start();
         }
 
         public void TileClick(Object sender, EventArgs e)
         {
-            
+
             CustomTile c = sender as CustomTile;
             if (phase == Phase.INICIO && !c.isLocked)
             {
@@ -219,7 +220,7 @@ namespace MainPrototype
                 if (c.isLocked == false)
                 {
                     //Mover player
-                    TargetTile = c;       
+                    TargetTile = c;
                 }
                 moved = true;
             }
@@ -237,15 +238,15 @@ namespace MainPrototype
 
                                 M.Hp -= Statics.Player.Atk;
                                 if (M.Hp <= 0)
-                                {                                   
+                                {
                                     score++;
                                     SpawnRandomMonster();
-                                    if(score > 0 && score%5 == 0)
+                                    if (score > 0 && score % 5 == 0)
                                     {
                                         SpawnRandomMonster();
                                         NumMonters++;
                                     }
-                                    if(Statics.Player.Luck <= r.Next(1, 101))
+                                    if (Statics.Player.Luck <= r.Next(1, 101))
                                     {
                                         Statics.UpdatePlayer(Convert.ToInt32(Statics.Player.MaxHp * 0.1));
                                         Debug.WriteLine(Statics.Player.Hp.ToString());
@@ -269,7 +270,7 @@ namespace MainPrototype
             }
             else if (phase == Phase.RECUO)
             {
-                
+
                 if (c.isLocked == false)
                 {
                     //Mover player
@@ -286,7 +287,7 @@ namespace MainPrototype
             {
                 for (int j = 0; j < Linhas; j++)
                 {
-                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Statics.emptyTileColor);                   
+                    var a = new CustomTile(i, j, false, TileSize, BorderStyle.Fixed3D, i * (TileSize + 1), j * (TileSize + 1), Statics.emptyTileColor);
                     a.Click += new EventHandler(TileClick);
                     MatrizTiles[i, j] = a;
                     Controls.Add(a);
@@ -294,7 +295,7 @@ namespace MainPrototype
             }
             for (int i = 0; i < NumMonters; i++)
             {
-                
+
                 SpawnRandomMonster();
             }
 
@@ -320,7 +321,7 @@ namespace MainPrototype
         public void SpawnRandomMonster()
         {
             bool free = false;
-            int MonsX= 0, MonsY =0; double MonsHp, monsAtk;
+            int MonsX = 0, MonsY = 0; double MonsHp, monsAtk;
             MonsHp = Math.Ceiling(10.0 * (1 + (score / 10)));
             MonsHp = r.Next(Convert.ToInt32(MonsHp) - 5, Convert.ToInt32(MonsHp) + 6);
             monsAtk = Math.Ceiling(1.0 + (score / 10));
@@ -345,7 +346,7 @@ namespace MainPrototype
                 for (int j = 0; j < Linhas; j++)
                 {
 
-                    if (Math.Abs(c.x - MatrizTiles[i, j].x) + Math.Abs(c.y - MatrizTiles[i, j].y) < distancia+1)
+                    if (Math.Abs(c.x - MatrizTiles[i, j].x) + Math.Abs(c.y - MatrizTiles[i, j].y) < distancia + 1)
                     {
 
                         if (MatrizTiles[i, j].isPlayer)
@@ -398,19 +399,20 @@ namespace MainPrototype
             RangeLabel.Text = Statics.Player.Range.ToString();
             LuckLabel.Text = Statics.Player.Luck + "%";
 
-            HpModLbl.Text = "+"+Statics.Modificadores.Hp;
+            HpModLbl.Text = "+" + Statics.Modificadores.Hp;
             AtkModLbl.Text = "+" + Statics.Modificadores.Atk;
             DefModLbl.Text = "+" + Statics.Modificadores.Def;
             SpeedModLbl.Text = "+" + Statics.Modificadores.MovSpeed;
             LuckModLbl.Text = "+" + Statics.Modificadores.Luck;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private async void timer1_TickAsync(object sender, EventArgs e)
         {
             if (phase == Phase.INICIO)
             {
                 CleanTilesMinusEntities();
-            } else if (phase == Phase.MOVIMENTACAO)
+            }
+            else if (phase == Phase.MOVIMENTACAO)
             {
                 if (moved)
                 {
@@ -448,16 +450,17 @@ namespace MainPrototype
                 else
                     ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed);
 
-                
 
-            }else if(phase == Phase.ATAQUE)
+
+            }
+            else if (phase == Phase.ATAQUE)
             {
                 for (int i = 0; i < Colunas; i++)
                 {
                     for (int j = 0; j < Linhas; j++)
                     {
 
-                        if ( Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.Range+1)
+                        if (Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.Range + 1)
                         {
 
                             if (MatrizTiles[i, j].isPlayer)
@@ -486,9 +489,9 @@ namespace MainPrototype
                     }
                 }
             }
-            else if(phase == Phase.RECUO)
+            else if (phase == Phase.RECUO)
             {
-                
+
                 if (moved)
                 {
                     deltaX = Statics.Player.X - TargetTile.x;
@@ -524,7 +527,8 @@ namespace MainPrototype
                 }
                 else
                     ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
-            }else if(phase == Phase.ENEMYMOV)
+            }
+            else if (phase == Phase.ENEMYMOV)
             {
                 BackColor = Color.FromArgb(70, 44, 99);
                 if (monstercounter < NumMonters)
@@ -663,7 +667,7 @@ namespace MainPrototype
                     phase = Phase.ENEMYATK;
                 }
             }
-            else if(phase == Phase.ENEMYATK)
+            else if (phase == Phase.ENEMYATK)
             {
                 if (monstercounter < NumMonters)
                 {
@@ -689,8 +693,8 @@ namespace MainPrototype
                     turn++;
                 }
             }
-            UpdateUI(); 
-            foreach(var m in monsters)
+            UpdateUI();
+            foreach (var m in monsters)
             {
                 if (m.Hp <= 0)
                 {
@@ -704,10 +708,12 @@ namespace MainPrototype
                     MatrizTiles[m.X, m.Y].PutMonster(m.Hp);
                 }
             }
-            if(Statics.Player.Hp <= 0)
+            if (Statics.Player.Hp <= 0)
             {
                 timer1.Stop();
                 MessageBox.Show("Game over");
+                Statics.Player.IsPlaying = false;
+                await Statics.UpdateGame();
                 this.Close();
                 Statics.MenuScreen.Show();
             }
@@ -720,7 +726,7 @@ namespace MainPrototype
             int xCoord = this.Left;
             int yCoord = this.Top;
             int rnd = 0;
-            
+
             Random RandomClass = new Random();
 
 
@@ -736,10 +742,12 @@ namespace MainPrototype
             this.Top = yCoord;
         }
 
-        private void close_Click(object sender, EventArgs e)
+        private async void close_Click(object sender, EventArgs e)
         {
-            Statics.MenuScreen.Show();
+            Statics.Player.IsPlaying = false;
+            await Statics.UpdateGame();
             this.Close();
+            Statics.MenuScreen.Show();
 
         }
 
@@ -748,10 +756,24 @@ namespace MainPrototype
             this.WindowState = FormWindowState.Minimized;
         }
 
-     
-        private void HpModLbl_Click(object sender, EventArgs e)
+        private async void UpdatePlayer_Tick(object sender, EventArgs e)
         {
+            if (Statics.ServerPlayer != null)
+            {
+                Debug.WriteLine(Statics.ServerPlayer.R);
+                if (Statics.ServerPlayer.R == 1)
+                {
+                    Statics.UpdatePlayer();
+                    UpdateUI();
+                    await Statics.UpdateGame();
+                }
+                else
+                {
+                    await Statics.UpdateGame();
+                }
 
+
+            }
         }
     }
 }

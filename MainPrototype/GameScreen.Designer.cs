@@ -63,6 +63,7 @@
             this.defIcon = new System.Windows.Forms.PictureBox();
             this.AtkIcon = new System.Windows.Forms.PictureBox();
             this.hpIcon = new System.Windows.Forms.PictureBox();
+            this.UpdatePlayer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.minimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -79,7 +80,7 @@
             // 
             // timer1
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.timer1_TickAsync);
             // 
             // panel1
             // 
@@ -158,7 +159,6 @@
             this.HpModLbl.TabIndex = 7;
             this.HpModLbl.Text = "+ 0";
             this.HpModLbl.Visible = false;
-            this.HpModLbl.Click += new System.EventHandler(this.HpModLbl_Click);
             // 
             // AtkModLbl
             // 
@@ -398,6 +398,12 @@
             this.hpIcon.TabIndex = 1;
             this.hpIcon.TabStop = false;
             // 
+            // UpdatePlayer
+            // 
+            this.UpdatePlayer.Enabled = true;
+            this.UpdatePlayer.Interval = 2000;
+            this.UpdatePlayer.Tick += new System.EventHandler(this.UpdatePlayer_Tick);
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -494,6 +500,7 @@
         private System.Windows.Forms.Label turnLabel;
         private System.Windows.Forms.Label PointLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Timer UpdatePlayer;
     }
 }
 
