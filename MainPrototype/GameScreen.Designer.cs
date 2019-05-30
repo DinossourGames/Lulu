@@ -51,7 +51,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.turnLabel = new System.Windows.Forms.Label();
             this.PointLabel = new System.Windows.Forms.Label();
-            this.minimize = new System.Windows.Forms.PictureBox();
+            this.UpdatePlayer = new System.Windows.Forms.Timer(this.components);
             this.close = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -63,8 +63,6 @@
             this.defIcon = new System.Windows.Forms.PictureBox();
             this.AtkIcon = new System.Windows.Forms.PictureBox();
             this.hpIcon = new System.Windows.Forms.PictureBox();
-            this.UpdatePlayer = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.minimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -98,7 +96,7 @@
             this.hpLabel.Size = new System.Drawing.Size(97, 33);
             this.hpLabel.TabIndex = 7;
             this.hpLabel.Text = "0/0";
-            this.hpLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.hpLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // AtkLabel
             // 
@@ -108,7 +106,7 @@
             this.AtkLabel.Size = new System.Drawing.Size(97, 33);
             this.AtkLabel.TabIndex = 7;
             this.AtkLabel.Text = "0";
-            this.AtkLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.AtkLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // DefLabel
             // 
@@ -118,7 +116,7 @@
             this.DefLabel.Size = new System.Drawing.Size(97, 33);
             this.DefLabel.TabIndex = 7;
             this.DefLabel.Text = "0";
-            this.DefLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.DefLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // SpeedLabel
             // 
@@ -128,7 +126,7 @@
             this.SpeedLabel.Size = new System.Drawing.Size(97, 33);
             this.SpeedLabel.TabIndex = 7;
             this.SpeedLabel.Text = "0/0";
-            this.SpeedLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.SpeedLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // RangeLabel
             // 
@@ -138,7 +136,7 @@
             this.RangeLabel.Size = new System.Drawing.Size(97, 33);
             this.RangeLabel.TabIndex = 7;
             this.RangeLabel.Text = "0";
-            this.RangeLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.RangeLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // LuckLabel
             // 
@@ -148,7 +146,7 @@
             this.LuckLabel.Size = new System.Drawing.Size(97, 33);
             this.LuckLabel.TabIndex = 7;
             this.LuckLabel.Text = "0%";
-            this.LuckLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.LuckLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // HpModLbl
             // 
@@ -280,16 +278,11 @@
             this.PointLabel.TabIndex = 9;
             this.PointLabel.Text = "Pontos: 0";
             // 
-            // minimize
+            // UpdatePlayer
             // 
-            this.minimize.Image = global::MainPrototype.Properties.Resources.minus_48px;
-            this.minimize.Location = new System.Drawing.Point(1129, 0);
-            this.minimize.Name = "minimize";
-            this.minimize.Size = new System.Drawing.Size(36, 31);
-            this.minimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.minimize.TabIndex = 11;
-            this.minimize.TabStop = false;
-            this.minimize.Click += new System.EventHandler(this.minimize_Click);
+            this.UpdatePlayer.Enabled = true;
+            this.UpdatePlayer.Interval = 2000;
+            this.UpdatePlayer.Tick += new System.EventHandler(this.UpdatePlayer_Tick);
             // 
             // close
             // 
@@ -398,12 +391,6 @@
             this.hpIcon.TabIndex = 1;
             this.hpIcon.TabStop = false;
             // 
-            // UpdatePlayer
-            // 
-            this.UpdatePlayer.Enabled = true;
-            this.UpdatePlayer.Interval = 2000;
-            this.UpdatePlayer.Tick += new System.EventHandler(this.UpdatePlayer_Tick);
-            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -411,7 +398,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1199, 561);
             this.Controls.Add(this.hpLabel);
-            this.Controls.Add(this.minimize);
             this.Controls.Add(this.close);
             this.Controls.Add(this.PointLabel);
             this.Controls.Add(this.turnLabel);
@@ -446,9 +432,9 @@
             this.Name = "GameScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Screen_MouseDown);
-            ((System.ComponentModel.ISupportInitialize)(this.minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -489,7 +475,6 @@
         private System.Windows.Forms.PictureBox patricioPic;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox minimize;
         private System.Windows.Forms.PictureBox close;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

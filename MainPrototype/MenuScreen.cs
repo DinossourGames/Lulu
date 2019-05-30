@@ -17,12 +17,6 @@ namespace MainPrototype
         private void Screen_MouseDown(object sender, MouseEventArgs e)
         {
 
-            //used to drag the form
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
         }
 
         internal static class NativeWinAPI
@@ -160,6 +154,11 @@ namespace MainPrototype
         {
             Statics.MenuScreen.Hide();
             new Tutorial().Show();
+        }
+
+        private void MenuScreen_Load(object sender, EventArgs e)
+        {
+            new Form1().Show();
         }
     }
 }
