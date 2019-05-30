@@ -73,12 +73,9 @@ namespace MainPrototype
         public static Atributos GenerateModifiers()
         {
             Modificadores = new Atributos(0, 0, 0, 0, Player.Range, 0);
-
+            Player.ItemAtual = new Item(null,0, "Nadadeira", "", -1, Modificadores);
             return Modificadores;
         }
-
-
-
 
         /// <summary>
         /// Cria uma nova instancia de Player que irá persistir em tempo de execução
@@ -125,8 +122,8 @@ namespace MainPrototype
         public static void UpdatePlayer(int mod)
         {
             Player.Hp += mod;
-            if (mod > Player.MaxHp)
-                Player.Hp = Player.MaxHp;
+            if (Player.Hp > Player.MaxHp + Player.ItemAtual.StatBonus.Hp)
+                Player.Hp = Player.MaxHp + Player.ItemAtual.StatBonus.Hp;
         }
         public static void UpdatePlayer()
         {
@@ -134,6 +131,10 @@ namespace MainPrototype
             Player.IsPlaying = true;
             Player.R = 0;
            
+        }
+        public static void BreakWeapon()
+        {
+            Player.ItemAtual = new Item(null, 0, "Nadadeira", "", -1, Modificadores);
         }
         /// <summary>
         /// Esta função salva o player.

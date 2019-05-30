@@ -24,10 +24,10 @@ namespace ClassModels
         public Player Attack(Player p)
         {
             Random r = new Random();
-            if (Convert.ToInt32(r.Next(1, 6) * (Atk / p.Def)) <= 0)
+            if (Convert.ToInt32(r.Next(1, 6) * (Atk / (p.Def+p.ItemAtual.StatBonus.Def))) <= 0)
                 p.Hp -= 1;
             else
-                p.Hp -=Convert.ToInt32(r.Next(1,6) * (Atk/p.Def));
+                p.Hp -=Convert.ToInt32(r.Next(1,6) * (Atk/ (p.Def + p.ItemAtual.StatBonus.Def)));
             
             return p;
         }

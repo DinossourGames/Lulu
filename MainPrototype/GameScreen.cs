@@ -159,6 +159,7 @@ namespace MainPrototype
         int NumMonters = 6;
         int monsterMov = 4;
         int score = 0;
+        int range;
         public int TileSize { get; private set; } = 32;
         private int linhas = 17;
         private int colunas = 24;
@@ -189,7 +190,7 @@ namespace MainPrototype
             phase = Phase.INICIO;
             Statics.CreateNewPlayer(20, 10, 100, 0, 0, 4, 2, 50);
             Statics.GenerateModifiers();
-            speedLeft = Statics.Player.Speed;
+            speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
             Statics.StartGame();
             timer1.Interval = 33;
             timer1.Start();
@@ -210,7 +211,7 @@ namespace MainPrototype
             //Turno de movimento
             else if (phase == Phase.MOVIMENTACAO)
             {
-                speedLeft = Statics.Player.Speed;
+                speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
                 if (c.isLocked == false)
                 {
                     //Mover player
@@ -229,8 +230,10 @@ namespace MainPrototype
                         {
                             if (c.x == M.X && c.y == M.Y)
                             {
-
-                                M.Hp -= Statics.Player.Atk;
+                                Statics.Player.ItemAtual.Durability--;
+                                if (Statics.Player.ItemAtual.Durability == 0)
+                                    Statics.BreakWeapon();
+                                M.Hp -= Statics.Player.Atk + Statics.Player.ItemAtual.StatBonus.Atk;
                                 if (M.Hp <= 0)
                                 {
                                     score++;
@@ -240,10 +243,10 @@ namespace MainPrototype
                                         SpawnRandomMonster();
                                         NumMonters++;
                                     }
-                                    if (Statics.Player.Luck <= r.Next(1, 101))
+                                    var actualLuck = Statics.Player.Luck + Statics.Player.ItemAtual.StatBonus.Luck;
+                                    if (actualLuck >= r.Next(1, 101))
                                     {
-                                        Statics.UpdatePlayer(Convert.ToInt32(Statics.Player.MaxHp * 0.1));
-                                        Debug.WriteLine(Statics.Player.Hp.ToString());
+                                        Statics.UpdatePlayer(Convert.ToInt32(Math.Round((Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp) * 0.1)));
                                     }
                                     break;
                                 }
@@ -372,7 +375,7 @@ namespace MainPrototype
 
         public void UpdateUI()
         {
-            if (Statics.Player.Hp <= Statics.Player.MaxHp * 0.25)
+            if (Statics.Player.Hp <= (Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp) * 0.25)
             {
                 patricioPic.Image = Properties.Resources.Machucado;
                 if (hpLabel.ForeColor == Color.DarkRed)
@@ -386,22 +389,68 @@ namespace MainPrototype
             turnLabel.Text = "Turno: " + turn;
             PointLabel.Text = "Pontos: " + score;
 
-            hpLabel.Text = Statics.Player.Hp + "/" + Statics.Player.MaxHp;
-            AtkLabel.Text = Statics.Player.Atk.ToString();
-            DefLabel.Text = Statics.Player.Def.ToString();
-            SpeedLabel.Text = speedLeft + "/" + Statics.Player.Speed;
-            RangeLabel.Text = Statics.Player.Range.ToString();
-            LuckLabel.Text = Statics.Player.Luck + "%";
+            hpLabel.Text = Statics.Player.Hp + "/" + (Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp);
+            AtkLabel.Text = (Statics.Player.Atk + Statics.Player.ItemAtual.StatBonus.Atk).ToString();
+            DefLabel.Text = (Statics.Player.Def + Statics.Player.ItemAtual.StatBonus.Def).ToString();
+            SpeedLabel.Text = speedLeft + "/" + (Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed);
+            RangeLabel.Text = Statics.Player.ItemAtual.StatBonus.AtkRange.ToString();
+            LuckLabel.Text = (Statics.Player.Luck + Statics.Player.ItemAtual.StatBonus.Luck) + "%";
 
-            HpModLbl.Text = "+" + Statics.Modificadores.Hp;
-            AtkModLbl.Text = "+" + Statics.Modificadores.Atk;
-            DefModLbl.Text = "+" + Statics.Modificadores.Def;
-            SpeedModLbl.Text = "+" + Statics.Modificadores.MovSpeed;
-            LuckModLbl.Text = "+" + Statics.Modificadores.Luck;
+            if (Statics.Player.ItemAtual.StatBonus.Hp != 0)
+            {
+                HpModLbl.Text = "+" + Statics.Player.ItemAtual.StatBonus.Hp;
+                HpModLbl.Visible = true;
+            }
+            else
+                HpModLbl.Visible = false;
+
+            if (Statics.Player.ItemAtual.StatBonus.Atk != 0)
+            {
+                AtkModLbl.Text = "+" + Statics.Player.ItemAtual.StatBonus.Atk;
+                AtkModLbl.Visible = true;
+            }
+            else
+                AtkModLbl.Visible = false;
+
+            if (Statics.Player.ItemAtual.StatBonus.Def != 0)
+            {
+                DefModLbl.Text = "+" + Statics.Player.ItemAtual.StatBonus.Def;
+                DefModLbl.Visible = true;
+            }
+            else
+                DefModLbl.Visible = false;
+
+            if (Statics.Player.ItemAtual.StatBonus.MovSpeed != 0)
+            {
+                SpeedModLbl.Text = "+" + Statics.Player.ItemAtual.StatBonus.MovSpeed;
+                SpeedModLbl.Visible = true;
+            }
+            else
+                SpeedModLbl.Visible = false;
+
+            if (Statics.Player.ItemAtual.StatBonus.Luck != 0)
+            {
+                LuckModLbl.Text = "+" + Statics.Player.ItemAtual.StatBonus.Luck;
+                LuckModLbl.Visible = true;
+            }
+            else
+                LuckModLbl.Visible = false;
+
+            if (phase == Phase.ENEMYMOV || phase == Phase.ENEMYATK || phase == Phase.INICIO)
+            {
+                passTurn.Enabled = false;
+                passTurn.Visible = false;
+            }
+            else
+            {
+                passTurn.Enabled = true;
+                passTurn.Visible = true;
+            }
         }
 
         private async void timer1_TickAsync(object sender, EventArgs e)
         {
+            range = Statics.Player.ItemAtual.StatBonus.AtkRange;
             if (phase == Phase.INICIO)
             {
                 CleanTilesMinusEntities();
@@ -442,7 +491,7 @@ namespace MainPrototype
                     }
                 }
                 else
-                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed);
+                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed);
 
 
 
@@ -454,7 +503,7 @@ namespace MainPrototype
                     for (int j = 0; j < Linhas; j++)
                     {
 
-                        if (Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.Range + 1)
+                        if (Math.Abs(Statics.Player.X - MatrizTiles[i, j].x) + Math.Abs(Statics.Player.Y - MatrizTiles[i, j].y) < Statics.Player.ItemAtual.StatBonus.AtkRange + 1)
                         {
 
                             if (MatrizTiles[i, j].isPlayer)
@@ -515,7 +564,7 @@ namespace MainPrototype
                     else
                     {
                         moved = false;
-                        speedLeft = Statics.Player.Speed;
+                        speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
                         phase = Phase.ENEMYMOV;
                     }
                 }
@@ -681,7 +730,6 @@ namespace MainPrototype
                 {
                     hpLabel.ForeColor = Color.Black;
                     hpLabel.Font = new Font("Arial", 16, FontStyle.Regular);
-                    Debug.WriteLine(Statics.Player.Hp.ToString());
                     monstercounter = 0;
                     phase = Phase.MOVIMENTACAO;
                     turn++;
@@ -710,9 +758,7 @@ namespace MainPrototype
                 await Statics.UpdateGame();
                 this.Hide();
                 Statics.MenuScreen.Show();
-            }
-
-
+            }          
         }
 
         public void ShakeScreen()
@@ -775,6 +821,11 @@ namespace MainPrototype
             Statics.MenuScreen.Close();
             Application.Exit();
 
+        }
+
+        private void passTurn_Click(object sender, EventArgs e)
+        {
+            phase = Phase.ENEMYMOV;
         }
     }
 }

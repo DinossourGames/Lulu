@@ -42,7 +42,7 @@
             this.pbBG.Margin = new System.Windows.Forms.Padding(10);
             this.pbBG.Name = "pbBG";
             this.pbBG.Padding = new System.Windows.Forms.Padding(10);
-            this.pbBG.Size = new System.Drawing.Size(1280, 1024);
+            this.pbBG.Size = new System.Drawing.Size(1280, 788);
             this.pbBG.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbBG.TabIndex = 0;
             this.pbBG.TabStop = false;
@@ -55,10 +55,10 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1280, 1024);
+            this.ClientSize = new System.Drawing.Size(1280, 788);
             this.ControlBox = false;
             this.Controls.Add(this.pbBG);
-            this.Cursor = System.Windows.Forms.Cursors.No;
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -23,6 +23,10 @@ namespace CustomControls
             }
         }
 
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            base.OnPaintBackground(pevent);
+        }
 
         [Browsable(true)]
         [Category("CustomProps")]

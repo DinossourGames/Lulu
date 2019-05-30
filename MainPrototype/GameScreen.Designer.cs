@@ -63,6 +63,7 @@
             this.defIcon = new System.Windows.Forms.PictureBox();
             this.AtkIcon = new System.Windows.Forms.PictureBox();
             this.hpIcon = new System.Windows.Forms.PictureBox();
+            this.passTurn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -153,7 +154,7 @@
             this.HpModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HpModLbl.Location = new System.Drawing.Point(973, 103);
             this.HpModLbl.Name = "HpModLbl";
-            this.HpModLbl.Size = new System.Drawing.Size(42, 31);
+            this.HpModLbl.Size = new System.Drawing.Size(53, 31);
             this.HpModLbl.TabIndex = 7;
             this.HpModLbl.Text = "+ 0";
             this.HpModLbl.Visible = false;
@@ -163,7 +164,7 @@
             this.AtkModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AtkModLbl.Location = new System.Drawing.Point(973, 148);
             this.AtkModLbl.Name = "AtkModLbl";
-            this.AtkModLbl.Size = new System.Drawing.Size(42, 25);
+            this.AtkModLbl.Size = new System.Drawing.Size(53, 25);
             this.AtkModLbl.TabIndex = 7;
             this.AtkModLbl.Text = "+ 0";
             this.AtkModLbl.Visible = false;
@@ -173,7 +174,7 @@
             this.DefModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DefModLbl.Location = new System.Drawing.Point(973, 187);
             this.DefModLbl.Name = "DefModLbl";
-            this.DefModLbl.Size = new System.Drawing.Size(42, 25);
+            this.DefModLbl.Size = new System.Drawing.Size(53, 25);
             this.DefModLbl.TabIndex = 7;
             this.DefModLbl.Text = "+ 0";
             this.DefModLbl.Visible = false;
@@ -183,7 +184,7 @@
             this.SpeedModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SpeedModLbl.Location = new System.Drawing.Point(973, 226);
             this.SpeedModLbl.Name = "SpeedModLbl";
-            this.SpeedModLbl.Size = new System.Drawing.Size(42, 25);
+            this.SpeedModLbl.Size = new System.Drawing.Size(53, 25);
             this.SpeedModLbl.TabIndex = 7;
             this.SpeedModLbl.Text = "+ 0";
             this.SpeedModLbl.Visible = false;
@@ -193,7 +194,7 @@
             this.LuckModLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LuckModLbl.Location = new System.Drawing.Point(973, 304);
             this.LuckModLbl.Name = "LuckModLbl";
-            this.LuckModLbl.Size = new System.Drawing.Size(42, 25);
+            this.LuckModLbl.Size = new System.Drawing.Size(53, 25);
             this.LuckModLbl.TabIndex = 7;
             this.LuckModLbl.Text = "+ 0";
             this.LuckModLbl.Visible = false;
@@ -298,7 +299,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.DimGray;
-            this.pictureBox3.Location = new System.Drawing.Point(804, 470);
+            this.pictureBox3.Location = new System.Drawing.Point(805, 467);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(82, 76);
             this.pictureBox3.TabIndex = 8;
@@ -391,12 +392,24 @@
             this.hpIcon.TabIndex = 1;
             this.hpIcon.TabStop = false;
             // 
+            // passTurn
+            // 
+            this.passTurn.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passTurn.Location = new System.Drawing.Point(1003, 40);
+            this.passTurn.Name = "passTurn";
+            this.passTurn.Size = new System.Drawing.Size(62, 45);
+            this.passTurn.TabIndex = 11;
+            this.passTurn.Text = "Passar turno";
+            this.passTurn.UseVisualStyleBackColor = true;
+            this.passTurn.Click += new System.EventHandler(this.passTurn_Click);
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1199, 561);
+            this.Controls.Add(this.passTurn);
             this.Controls.Add(this.hpLabel);
             this.Controls.Add(this.close);
             this.Controls.Add(this.PointLabel);
@@ -432,7 +445,6 @@
             this.Name = "GameScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameScreen_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Screen_MouseDown);
@@ -487,6 +499,7 @@
         private System.Windows.Forms.Label PointLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Timer UpdatePlayer;
+        private System.Windows.Forms.Button passTurn;
     }
 }
 
