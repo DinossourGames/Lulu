@@ -26,9 +26,9 @@ namespace MainPrototype
 
         public static Color enemyColor = Color.FromArgb(130, 85, 162);
 
-        public static Color MovColor = Color.FromArgb(51, 204, 51);
+        public static Color MovColor = Color.FromArgb(255,188, 224, 182);
 
-        public static Color AtkRangeColor = Color.FromArgb(51, 153, 255);
+        public static Color AtkRangeColor = Color.FromArgb(255,182, 221, 218);
 
         public static Atributos Modificadores { get; private set; }
 

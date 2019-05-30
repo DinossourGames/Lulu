@@ -708,7 +708,7 @@ namespace MainPrototype
                 MessageBox.Show("Game over");
                 Statics.Player.IsPlaying = false;
                 await Statics.UpdateGame();
-                this.Close();
+                this.Hide();
                 Statics.MenuScreen.Show();
             }
 
