@@ -121,16 +121,19 @@
   <data name="Machucado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Machucado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="minus_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\minus_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="multiply" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\multiply.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="minus_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\minus_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Nomezinho" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Nomezinho.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Patricio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Patricio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lastOne" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\yaaay.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

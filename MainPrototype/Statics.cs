@@ -8,6 +8,7 @@ using System.Drawing;
 using Firebase.Database;
 using Firebase.Database.Query;
 using System.Diagnostics;
+using System.Threading;
 
 namespace MainPrototype
 {
@@ -42,6 +43,23 @@ namespace MainPrototype
                     menuScreen = new MenuScreen();
                 }
                 return menuScreen;
+            }
+        }
+
+
+        private static Form1 bgScreen;
+
+        public static Thread t;
+
+        public static Form1 BgScreen
+        {
+            get
+            {
+                if (bgScreen == null)
+                {
+                    bgScreen = new Form1();
+                }
+                return bgScreen;
             }
         }
 
@@ -158,8 +176,6 @@ namespace MainPrototype
             return false;
         }
         #endregion
-
-
 
     }
 }

@@ -143,13 +143,20 @@ namespace MainPrototype
         private void Button2_Click(object sender, EventArgs e)
         {
             Statics.MenuScreen.Show();
-            this.Close();
+            this.Hide();
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
             this.Close();
             new GameScreen().Show();
+        }
+
+        private void Tutorial_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Statics.MenuScreen.Close();
+            Application.Exit();
+
         }
     }
 }

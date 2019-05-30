@@ -65,6 +65,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tutorial";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tutorial_FormClosing);
             this.ResumeLayout(false);
 
         }

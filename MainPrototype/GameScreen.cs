@@ -740,7 +740,7 @@ namespace MainPrototype
         {
             Statics.Player.IsPlaying = false;
             await Statics.UpdateGame();
-            this.Close();
+            this.Hide();
             Statics.MenuScreen.Show();
 
         }
@@ -768,6 +768,13 @@ namespace MainPrototype
 
 
             }
+        }
+
+        private void GameScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Statics.MenuScreen.Close();
+            Application.Exit();
+
         }
     }
 }
