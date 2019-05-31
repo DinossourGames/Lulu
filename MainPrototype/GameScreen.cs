@@ -903,7 +903,7 @@ namespace MainPrototype
                 Statics.UpdatePlayer(true);
                 await Statics.UpdateGame();
                 UpdateUI();
-                Statics.UpdatePlayer(Statics.Player.PoolResult.StatBonus.Hp);
+                //Statics.UpdatePlayer(Statics.Player.PoolResult.StatBonus.Hp);
             }
         }
 

@@ -425,6 +425,7 @@
             // 
             this.poolSpeed.BackColor = System.Drawing.Color.Transparent;
             this.poolSpeed.BackgroundImage = global::MainPrototype.Properties.Resources.Speed;
+            this.poolSpeed.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolSpeed.Location = new System.Drawing.Point(895, 522);
             this.poolSpeed.Name = "poolSpeed";
             this.poolSpeed.Size = new System.Drawing.Size(24, 24);
@@ -435,6 +436,7 @@
             // poolHp
             // 
             this.poolHp.BackColor = System.Drawing.Color.Transparent;
+            this.poolHp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolHp.Image = global::MainPrototype.Properties.Resources.Vida;
             this.poolHp.Location = new System.Drawing.Point(895, 495);
             this.poolHp.Name = "poolHp";
@@ -447,6 +449,7 @@
             // 
             this.poolLuck.BackColor = System.Drawing.Color.Transparent;
             this.poolLuck.BackgroundImage = global::MainPrototype.Properties.Resources.Lucky;
+            this.poolLuck.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolLuck.Location = new System.Drawing.Point(1095, 522);
             this.poolLuck.Name = "poolLuck";
             this.poolLuck.Size = new System.Drawing.Size(24, 24);
@@ -458,6 +461,7 @@
             // 
             this.poolDef.BackColor = System.Drawing.Color.Transparent;
             this.poolDef.BackgroundImage = global::MainPrototype.Properties.Resources.Def;
+            this.poolDef.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolDef.Location = new System.Drawing.Point(1095, 495);
             this.poolDef.Name = "poolDef";
             this.poolDef.Size = new System.Drawing.Size(24, 24);
@@ -469,6 +473,7 @@
             // 
             this.poolRange.BackColor = System.Drawing.Color.Transparent;
             this.poolRange.BackgroundImage = global::MainPrototype.Properties.Resources.Range;
+            this.poolRange.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolRange.Location = new System.Drawing.Point(995, 522);
             this.poolRange.Name = "poolRange";
             this.poolRange.Size = new System.Drawing.Size(24, 24);
@@ -480,6 +485,7 @@
             // 
             this.poolAtk.BackColor = System.Drawing.Color.Transparent;
             this.poolAtk.BackgroundImage = global::MainPrototype.Properties.Resources.Atk;
+            this.poolAtk.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.poolAtk.Location = new System.Drawing.Point(995, 495);
             this.poolAtk.Name = "poolAtk";
             this.poolAtk.Size = new System.Drawing.Size(24, 24);
