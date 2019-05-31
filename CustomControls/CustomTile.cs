@@ -16,16 +16,22 @@ namespace CustomControls
 
         public string Vida
         {
-            get { return monsterHp.Text;
+            get
+            {
+                return vida;
             }
-            set { monsterHp.Text = value;
-                monsterHp.Visible = true;
+            set
+            {
+                vida = value;
             }
         }
 
-        protected override void OnPaintBackground(PaintEventArgs pevent)
+        protected override void OnPaint(PaintEventArgs pe)
         {
-            base.OnPaintBackground(pevent);
+            using (Font myFont = new Font("Arial", 14))
+            {
+                pe.Graphics.DrawString(vida, myFont, Brushes.White, new Point(2, 2));
+            }
         }
 
         [Browsable(true)]
@@ -49,7 +55,7 @@ namespace CustomControls
         public bool isMonster { get; set; } = false;
         public CustomTile()
         {
-            
+
             InitializeComponent();
         }
 
@@ -62,13 +68,9 @@ namespace CustomControls
             Width = size;
             BackColor = back;
             Location = new Point(coordenadaX, coordenadaY);
-            
+
         }
 
-        protected override void OnPaint(PaintEventArgs pe)
-        {
-            base.OnPaint(pe);
-        }
 
         public void PutPlayer()
         {

@@ -155,5 +155,59 @@
   <ItemGroup>
     <None Include="Resources\yaaay.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\suchEmpty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1_Intro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2_Sobre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3_Move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4_Atk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5_MoveAgain.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6_Inimigos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7_Ajudantes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8_Itens.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9_Amigos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10_TheEnd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Atk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Def.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lucky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Range.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Speed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vida.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Seta.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

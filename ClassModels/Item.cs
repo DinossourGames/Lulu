@@ -14,6 +14,10 @@ namespace ClassModels
         public string Description { get; set; }
         public int Durability { get; set; }
         public Atributos StatBonus { get; set; }
+        public int price { get; set; }
+        public Item()
+        {
+        }
 
         public Item(String url, int id, string nome, string description, int durability, Atributos statBonus)
         {

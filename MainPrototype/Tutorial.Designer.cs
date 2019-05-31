@@ -57,6 +57,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::MainPrototype.Properties.Resources._1_Intro;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(1199, 561);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -66,6 +68,7 @@
             this.Text = "Tutorial";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tutorial_FormClosing);
+            this.Load += new System.EventHandler(this.Tutorial_Load);
             this.ResumeLayout(false);
 
         }

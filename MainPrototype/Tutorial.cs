@@ -135,21 +135,43 @@ namespace MainPrototype
 
         #endregion
 
+        public Image[] tutorials;
+        int count;
+
         public Tutorial()
         {
             InitializeComponent();
+            tutorials = new Image[10];
+            count = 0;
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Statics.MenuScreen.Show();
-            this.Hide();
+            if (count == 0)
+            {
+                Statics.MenuScreen.Show();
+                this.Hide();
+                
+            }
+            else
+            {
+                count--;
+                BackgroundImage = tutorials[count];
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            new GameScreen().Show();
+        {           
+            if (count == 9)
+            {
+                this.Hide();
+                new GameScreen().Show();
+            }
+            else
+            {
+                count++;
+                BackgroundImage = tutorials[count];
+            }
         }
 
         private void Tutorial_FormClosing(object sender, FormClosingEventArgs e)
@@ -157,6 +179,20 @@ namespace MainPrototype
             Statics.MenuScreen.Close();
             Application.Exit();
 
+        }
+
+        private void Tutorial_Load(object sender, EventArgs e)
+        {
+            tutorials[0] = Properties.Resources._1_Intro;
+            tutorials[1] = Properties.Resources._2_Sobre;
+            tutorials[2] = Properties.Resources._3_Move;
+            tutorials[3] = Properties.Resources._4_Atk;
+            tutorials[4] = Properties.Resources._5_MoveAgain;
+            tutorials[5] = Properties.Resources._6_Inimigos;
+            tutorials[6] = Properties.Resources._7_Ajudantes;
+            tutorials[7] = Properties.Resources._8_Itens;
+            tutorials[8] = Properties.Resources._9_Amigos;
+            tutorials[9] = Properties.Resources._10_TheEnd;
         }
     }
 }

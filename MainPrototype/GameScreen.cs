@@ -230,6 +230,8 @@ namespace MainPrototype
                         {
                             if (c.x == M.X && c.y == M.Y)
                             {
+                                MatrizTiles[M.X, M.Y].Vida = M.Hp.ToString();
+                                
                                 Statics.Player.ItemAtual.Durability--;
                                 if (Statics.Player.ItemAtual.Durability == 0)
                                     Statics.BreakWeapon();
@@ -295,8 +297,6 @@ namespace MainPrototype
 
                 SpawnRandomMonster();
             }
-
-            MessageBox.Show("Bem-vindo, nobre guerreiro, ao campo de batalha!");
         }
 
         public void CleanTilesMinusEntities()
@@ -310,7 +310,13 @@ namespace MainPrototype
                     if (MatrizTiles[i, j].isPlayer)
                         MatrizTiles[i, j].BackColor = Statics.playerColor;
                     if (MatrizTiles[i, j].isMonster)
+                    {
                         MatrizTiles[i, j].BackColor = Statics.enemyColor;
+                    }
+                    else
+                    {
+                        MatrizTiles[i, j].Vida = "";
+                    }
                 }
             }
         }
@@ -445,6 +451,43 @@ namespace MainPrototype
             {
                 passTurn.Enabled = true;
                 passTurn.Visible = true;
+            }
+
+            LblItemAtual.Text = Statics.Player.ItemAtual.Nome;
+            LblDescAtual.Text = Statics.Player.ItemAtual.Description;
+            if (Statics.Player.ItemAtual.URL == null)
+            {
+
+            }
+            else
+            {
+                LblDurabilty.Text = Statics.Player.ItemAtual.Durability.ToString();
+                ItemAtualPic.Load(Statics.Player.ItemAtual.URL);
+            }
+
+            if(Statics.Player.PoolResult == null)
+            {
+                PoolItemPic.Image = Properties.Resources.suchEmpty;
+                LblPoolItem.Text = "Ajuda a caminho!";
+                lblPoolAtk.Visible = false; lblPoolDef.Visible = false; lblPoolHp.Visible = false;
+                lblPoolLuck.Visible = false; lblPoolRange.Visible = false; lblPoolSpeed.Visible = false;
+                poolAtk.Visible = false; poolDef.Visible = false; poolHp.Visible = false;
+                poolLuck.Visible = false; poolRange.Visible = false; poolSpeed.Visible = false;
+            }
+            else
+            {
+                PoolItemPic.Load(Statics.Player.PoolResult.URL);
+                LblPoolItem.Text = Statics.Player.PoolResult.Nome;
+                lblPoolAtk.Visible = true; lblPoolDef.Visible = true; lblPoolHp.Visible = true;
+                lblPoolLuck.Visible = true; lblPoolRange.Visible = true; lblPoolSpeed.Visible = true;
+                lblPoolAtk.Text = Statics.Player.PoolResult.StatBonus.Atk.ToString();
+                lblPoolDef.Text = Statics.Player.PoolResult.StatBonus.Def.ToString();
+                lblPoolHp.Text = Statics.Player.PoolResult.StatBonus.Hp.ToString();
+                lblPoolLuck.Text = Statics.Player.PoolResult.StatBonus.Luck.ToString();
+                lblPoolRange.Text = Statics.Player.PoolResult.StatBonus.AtkRange.ToString();
+                lblPoolSpeed.Text = Statics.Player.PoolResult.StatBonus.MovSpeed.ToString();
+                poolAtk.Visible = true; poolDef.Visible = true; poolHp.Visible = true;
+                poolLuck.Visible = true; poolRange.Visible = true; poolSpeed.Visible = true;
             }
         }
 
@@ -581,7 +624,6 @@ namespace MainPrototype
                     deltaX = monsters[monstercounter].X - Statics.Player.X;
                     deltaY = monsters[monstercounter].Y - Statics.Player.Y;
                     timer1.Start();
-
                     if (passosdados < monsterMov)
                     {
 
@@ -742,6 +784,7 @@ namespace MainPrototype
                 {
                     MatrizTiles[m.X, m.Y].isMonster = false;
                     MatrizTiles[m.X, m.Y].BackColor = Color.White;
+                    MatrizTiles[m.X, m.Y].Vida = "";
                     monsters.Remove(m);
                     break;
                 }
