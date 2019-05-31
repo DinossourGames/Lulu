@@ -164,13 +164,13 @@ namespace MainPrototype
         {
             Reference = new FirebaseClient(BaseUrl);
             Player.IsPlaying = true;
-            await Reference.Child("Gamedata").Child("Player").PutAsync<Player>(Player);
+            await Reference.Child("Gamedata1").Child("Player").PutAsync<Player>(Player);
             StartListenServerData();
         }
 
         public static void StartListenServerData()
         {
-            Reference.Child("Gamedata").AsObservable<Player>().Subscribe(i =>
+            Reference.Child("Gamedata1").AsObservable<Player>().Subscribe(i =>
             {
                 try
                 {
@@ -188,7 +188,7 @@ namespace MainPrototype
 
         public static async Task<bool> UpdateGame()
         {
-            await Reference.Child("Gamedata").Child("Player").PutAsync(Player).ContinueWith(r => { return r.IsFaulted == true ? false : true; });
+            await Reference.Child("Gamedata1").Child("Player").PutAsync(Player).ContinueWith(r => { return r.IsFaulted == true ? false : true; });
             return false;
         }
         #endregion

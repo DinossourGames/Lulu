@@ -156,7 +156,7 @@ namespace MainPrototype
 
         Phase phase;
         int speedLeft;
-        int NumMonters = 6;
+        int NumMonters = 4;
         int monsterMov = 4;
         int score = 0;
         int range;
@@ -188,7 +188,7 @@ namespace MainPrototype
             monsters = new List<Monster>();
             patricioPic.Image = Properties.Resources.Patricio;
             phase = Phase.INICIO;
-            Statics.CreateNewPlayer(20, 10, 100, 0, 0, 4, 2, 50);
+            Statics.CreateNewPlayer(20, 10, 2, 0, 0, 4, 2, 20);
             Statics.GenerateModifiers();
             speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
             Statics.StartGame();
@@ -226,31 +226,44 @@ namespace MainPrototype
                 {
                     if (c.isMonster)
                     {
-                        foreach (var M in monsters)
+                        if (Statics.Player.ItemAtual.Nome == "Luva do Thanos")
                         {
-                            if (c.x == M.X && c.y == M.Y)
+                            double actualHalf = NumMonters / 2;
+                            int half = Convert.ToInt32(Math.Round(actualHalf));
+                            for (int i = 0; i < half; i++)
                             {
-                                MatrizTiles[M.X, M.Y].Vida = M.Hp.ToString();
-
-                                Statics.Player.ItemAtual.Durability--;
-                                if (Statics.Player.ItemAtual.Durability == 0)
-                                    Statics.BreakWeapon();
-                                M.Hp -= Statics.Player.Atk + Statics.Player.ItemAtual.StatBonus.Atk;
-                                if (M.Hp <= 0)
+                                monsters.RemoveAt(0);
+                                NumMonters--;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var M in monsters)
+                            {
+                                if (c.x == M.X && c.y == M.Y)
                                 {
-                                    score++;
-                                    SpawnRandomMonster();
-                                    if (score > 0 && score % 5 == 0)
+                                    MatrizTiles[M.X, M.Y].Vida = M.Hp.ToString();
+
+                                    Statics.Player.ItemAtual.Durability--;
+                                    if (Statics.Player.ItemAtual.Durability == 0)
+                                        Statics.BreakWeapon();
+                                    M.Hp -= Statics.Player.Atk + Statics.Player.ItemAtual.StatBonus.Atk;
+                                    if (M.Hp <= 0)
                                     {
+                                        score++;
                                         SpawnRandomMonster();
-                                        NumMonters++;
+                                        if (score > 0 && score % 5 == 0)
+                                        {
+                                            SpawnRandomMonster();
+                                            NumMonters++;
+                                        }
+                                        var actualLuck = Statics.Player.Luck + Statics.Player.ItemAtual.StatBonus.Luck;
+                                        if (actualLuck >= r.Next(1, 101))
+                                        {
+                                            Statics.UpdatePlayer(Convert.ToInt32(Math.Round((Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp) * 0.1)));
+                                        }
+                                        break;
                                     }
-                                    var actualLuck = Statics.Player.Luck + Statics.Player.ItemAtual.StatBonus.Luck;
-                                    if (actualLuck >= r.Next(1, 101))
-                                    {
-                                        Statics.UpdatePlayer(Convert.ToInt32(Math.Round((Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp) * 0.1)));
-                                    }
-                                    break;
                                 }
                             }
                         }
@@ -336,7 +349,6 @@ namespace MainPrototype
                     free = true;
             }
             var monsterToAdd = new Monster(Convert.ToInt32(MonsHp), Convert.ToInt32(monsAtk), MonsX, MonsY);
-            Debug.WriteLine($"Monster (hp):" + monsterToAdd.Hp);
             monsters.Add(monsterToAdd);
             MatrizTiles[monsterToAdd.X, monsterToAdd.Y].PutMonster(monsterToAdd.Hp);
             MatrizTiles[monsterToAdd.X, monsterToAdd.Y].isLocked = true;
@@ -507,54 +519,50 @@ namespace MainPrototype
         private async void timer1_TickAsync(object sender, EventArgs e)
         {
             range = Statics.Player.ItemAtual.StatBonus.AtkRange;
-            if (phase == Phase.INICIO)
+            switch (phase)
             {
-                CleanTilesMinusEntities();
-            }
-            else if (phase == Phase.MOVIMENTACAO)
-            {
-                if (moved)
-                {
-                    deltaX = Statics.Player.X - TargetTile.x;
-                    deltaY = Statics.Player.Y - TargetTile.y;
-                    if (!(deltaX == 0 && deltaY == 0))
+                case (Phase.INICIO):
+                    CleanTilesMinusEntities();
+                    break;
+                case (Phase.MOVIMENTACAO):
+                    if (moved)
                     {
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
-                        if (deltaX < 0)
+                        deltaX = Statics.Player.X - TargetTile.x;
+                        deltaY = Statics.Player.Y - TargetTile.y;
+                        if (!(deltaX == 0 && deltaY == 0))
                         {
-                            Statics.Player.X++;
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
+                            if (deltaX < 0)
+                            {
+                                Statics.Player.X++;
+                            }
+                            else if (deltaX > 0)
+                            {
+                                Statics.Player.X--;
+                            }
+                            else if (deltaY < 0)
+                            {
+                                Statics.Player.Y++;
+                            }
+                            else if (deltaY > 0)
+                            {
+                                Statics.Player.Y--;
+                            }
+                            speedLeft--;
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
                         }
-                        else if (deltaX > 0)
+                        else
                         {
-                            Statics.Player.X--;
+                            moved = false;
+                            phase = Phase.ATAQUE;
                         }
-                        else if (deltaY < 0)
-                        {
-                            Statics.Player.Y++;
-                        }
-                        else if (deltaY > 0)
-                        {
-                            Statics.Player.Y--;
-                        }
-                        speedLeft--;
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
                     }
                     else
-                    {
-                        moved = false;
-                        phase = Phase.ATAQUE;
-                    }
-                }
-                else
-                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed);
-
-
-
-            }
-            else if (phase == Phase.ATAQUE)
-            {
-                for (int i = 0; i < Colunas; i++)
+                        ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed);
+                    break;
+                case (Phase.ATAQUE):
+                    for (int i = 0; i < Colunas; i++)
                 {
                     for (int j = 0; j < Linhas; j++)
                     {
@@ -587,208 +595,212 @@ namespace MainPrototype
                         }
                     }
                 }
-            }
-            else if (phase == Phase.RECUO)
-            {
-
-                if (moved)
-                {
-                    deltaX = Statics.Player.X - TargetTile.x;
-                    deltaY = Statics.Player.Y - TargetTile.y;
-                    if (!(deltaX == 0 && deltaY == 0))
+                    break;
+                case (Phase.RECUO):
+                    if (moved)
                     {
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
-                        if (deltaX < 0)
+                        deltaX = Statics.Player.X - TargetTile.x;
+                        deltaY = Statics.Player.Y - TargetTile.y;
+                        if (!(deltaX == 0 && deltaY == 0))
                         {
-                            Statics.Player.X++;
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].isPlayer = false;
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].BackColor = Statics.MovColor;
+                            if (deltaX < 0)
+                            {
+                                Statics.Player.X++;
+                            }
+                            else if (deltaX > 0)
+                            {
+                                Statics.Player.X--;
+                            }
+                            else if (deltaY < 0)
+                            {
+                                Statics.Player.Y++;
+                            }
+                            else if (deltaY > 0)
+                            {
+                                Statics.Player.Y--;
+                            }
+                            MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
                         }
-                        else if (deltaX > 0)
+                        else
                         {
-                            Statics.Player.X--;
+                            moved = false;
+                            speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
+                            phase = Phase.ENEMYMOV;
                         }
-                        else if (deltaY < 0)
+                    }
+                    else
+                        ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
+                    break;
+                case (Phase.ENEMYMOV):
+                    BackColor = Color.FromArgb(70, 44, 99);
+                    if (monstercounter < NumMonters)
+                    {
+                        //Mover monster
+                        tries = 0;
+                        deltaX = monsters[monstercounter].X - Statics.Player.X;
+                        deltaY = monsters[monstercounter].Y - Statics.Player.Y;
+                        timer1.Start();
+                        if (passosdados < monsterMov)
                         {
-                            Statics.Player.Y++;
+
+                            MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].isMonster = false;
+                            if (!(((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0)))
+                            {
+                                Random r = new Random();
+                                if (deltaX == 0)
+                                {
+                                    if (deltaY < 0)
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y + 1].isMonster)
+                                        {
+                                            monsters[monstercounter].Y++;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y - 1].isMonster)
+                                        {
+                                            monsters[monstercounter].Y--;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                }
+                                else if (deltaY == 0)
+                                {
+                                    if (deltaX < 0)
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X + 1, monsters[monstercounter].Y].isMonster)
+                                        {
+                                            monsters[monstercounter].X++;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X - 1, monsters[monstercounter].Y].isMonster)
+                                        {
+                                            monsters[monstercounter].X--;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                }
+                                else if (r.Next(1, 3) == 1)
+                                {
+                                    if (deltaY < 0)
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y + 1].isMonster)
+                                        {
+                                            monsters[monstercounter].Y++;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y - 1].isMonster)
+                                        {
+                                            monsters[monstercounter].Y--;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (deltaX < 0)
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X + 1, monsters[monstercounter].Y].isMonster)
+                                        {
+                                            monsters[monstercounter].X++;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!MatrizTiles[monsters[monstercounter].X - 1, monsters[monstercounter].Y].isMonster)
+                                        {
+                                            monsters[monstercounter].X--;
+                                        }
+                                        else
+                                        {
+                                            tries++;
+                                        }
+                                    }
+                                }
+                                deltaX = monsters[monstercounter].X - Statics.Player.X;
+                                deltaY = monsters[monstercounter].Y - Statics.Player.Y;
+                            }
+                            MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].PutMonster(monsters[monstercounter].Hp);
+                            CleanTilesMinusEntities();
+                            passosdados++;
                         }
-                        else if (deltaY > 0)
+                        else
                         {
-                            Statics.Player.Y--;
+                            passosdados = 0;
+                            monstercounter++;
                         }
-                        MatrizTiles[Statics.Player.X, Statics.Player.Y].PutPlayer();
                     }
                     else
                     {
-                        moved = false;
-                        speedLeft = Statics.Player.Speed + Statics.Player.ItemAtual.StatBonus.MovSpeed;
-                        phase = Phase.ENEMYMOV;
+                        monstercounter = 0;
+                        BackColor = Color.AliceBlue;
+                        phase = Phase.ENEMYATK;
                     }
-                }
-                else
-                    ShowMovementOptions(MatrizTiles[Statics.Player.X, Statics.Player.Y], speedLeft);
-            }
-            else if (phase == Phase.ENEMYMOV)
-            {
-                BackColor = Color.FromArgb(70, 44, 99);
-                if (monstercounter < NumMonters)
-                {
-                    //Mover monster
-                    tries = 0;
-                    deltaX = monsters[monstercounter].X - Statics.Player.X;
-                    deltaY = monsters[monstercounter].Y - Statics.Player.Y;
-                    timer1.Start();
-                    if (passosdados < monsterMov)
+                    break;
+                case (Phase.ENEMYATK):
+                    if (monstercounter < NumMonters)
                     {
-
-                        MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].isMonster = false;
-                        if (!(((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0)))
+                        deltaX = monsters[monstercounter].X - Statics.Player.X;
+                        deltaY = monsters[monstercounter].Y - Statics.Player.Y;
+                        //Ataque monster
+                        if (((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0))
                         {
-                            Random r = new Random();
-                            if (deltaX == 0)
-                            {
-                                if (deltaY < 0)
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y + 1].isMonster)
-                                    {
-                                        monsters[monstercounter].Y++;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y - 1].isMonster)
-                                    {
-                                        monsters[monstercounter].Y--;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                            }
-                            else if (deltaY == 0)
-                            {
-                                if (deltaX < 0)
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X + 1, monsters[monstercounter].Y].isMonster)
-                                    {
-                                        monsters[monstercounter].X++;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X - 1, monsters[monstercounter].Y].isMonster)
-                                    {
-                                        monsters[monstercounter].X--;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                            }
-                            else if (r.Next(1, 3) == 1)
-                            {
-                                if (deltaY < 0)
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y + 1].isMonster)
-                                    {
-                                        monsters[monstercounter].Y++;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y - 1].isMonster)
-                                    {
-                                        monsters[monstercounter].Y--;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-
-                            }
-                            else
-                            {
-                                if (deltaX < 0)
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X + 1, monsters[monstercounter].Y].isMonster)
-                                    {
-                                        monsters[monstercounter].X++;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!MatrizTiles[monsters[monstercounter].X - 1, monsters[monstercounter].Y].isMonster)
-                                    {
-                                        monsters[monstercounter].X--;
-                                    }
-                                    else
-                                    {
-                                        tries++;
-                                    }
-                                }
-                            }
-                            deltaX = monsters[monstercounter].X - Statics.Player.X;
-                            deltaY = monsters[monstercounter].Y - Statics.Player.Y;
+                            Statics.UpdatePlayer(monsters[monstercounter].Attack(Statics.Player));
+                            hpLabel.ForeColor = Color.DarkRed;
+                            hpLabel.Font = new Font("Arial", 24, FontStyle.Bold);
+                            ShakeScreen();
                         }
-                        MatrizTiles[monsters[monstercounter].X, monsters[monstercounter].Y].PutMonster(monsters[monstercounter].Hp);
-                        CleanTilesMinusEntities();
-                        passosdados++;
-                    }
-                    else
-                    {
-                        passosdados = 0;
                         monstercounter++;
                     }
-                }
-                else
-                {
-                    monstercounter = 0;
-                    BackColor = Color.AliceBlue;
-                    phase = Phase.ENEMYATK;
-                }
-            }
-            else if (phase == Phase.ENEMYATK)
-            {
-                if (monstercounter < NumMonters)
-                {
-                    deltaX = monsters[monstercounter].X - Statics.Player.X;
-                    deltaY = monsters[monstercounter].Y - Statics.Player.Y;
-                    //Ataque monster
-                    if (((deltaX == -1 || deltaX == 1) && deltaY == 0) || ((deltaY == -1 || deltaY == 1) && deltaX == 0))
+                    else
                     {
-                        Statics.UpdatePlayer(monsters[monstercounter].Attack(Statics.Player));
-                        hpLabel.ForeColor = Color.DarkRed;
-                        hpLabel.Font = new Font("Arial", 24, FontStyle.Bold);
-                        ShakeScreen();
+                        hpLabel.ForeColor = Color.Black;
+                        hpLabel.Font = new Font("Arial", 16, FontStyle.Regular);
+                        monstercounter = 0;
+                        phase = Phase.MOVIMENTACAO;
+                        turn++;
+                        if(Statics.Player.ItemAtual.Nome == "A foice e o martelo")
+                        {
+                            foreach(var m in monsters)
+                            {
+                                m.Hp--;
+                            }
+                        }
                     }
-                    monstercounter++;
-                }
-                else
-                {
-                    hpLabel.ForeColor = Color.Black;
-                    hpLabel.Font = new Font("Arial", 16, FontStyle.Regular);
-                    monstercounter = 0;
-                    phase = Phase.MOVIMENTACAO;
-                    turn++;
-                }
+                    break;
             }
             UpdateUI();
             foreach (var m in monsters)
@@ -891,6 +903,7 @@ namespace MainPrototype
                 Statics.UpdatePlayer(true);
                 await Statics.UpdateGame();
                 UpdateUI();
+                Statics.UpdatePlayer(Statics.Player.PoolResult.StatBonus.Hp);
             }
         }
 

@@ -28,16 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pbBG = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbBG)).BeginInit();
             this.SuspendLayout();
             // 
             // pbBG
             // 
-            this.pbBG.BackColor = System.Drawing.Color.White;
+            this.pbBG.BackColor = System.Drawing.Color.Black;
             this.pbBG.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pbBG.Image = ((System.Drawing.Image)(resources.GetObject("pbBG.Image")));
+            this.pbBG.Image = global::MainPrototype.Properties.Resources.Intro;
             this.pbBG.Location = new System.Drawing.Point(0, 0);
             this.pbBG.Margin = new System.Windows.Forms.Padding(10);
             this.pbBG.Name = "pbBG";

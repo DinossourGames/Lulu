@@ -35,39 +35,39 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(505, 149);
+            this.button1.Location = new System.Drawing.Point(163, 270);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(164, 74);
+            this.button1.Size = new System.Drawing.Size(110, 74);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Novo Jogo";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(505, 250);
+            this.button2.Location = new System.Drawing.Point(134, 341);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(164, 74);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Tutorial";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.Transparent;
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Abort;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(505, 350);
+            this.button3.Location = new System.Drawing.Point(179, 413);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(164, 74);
+            this.button3.Size = new System.Drawing.Size(75, 69);
             this.button3.TabIndex = 2;
-            this.button3.Text = "Sair";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // MenuScreen
@@ -75,10 +75,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::MainPrototype.Properties.Resources.MenuScreen;
             this.ClientSize = new System.Drawing.Size(1199, 561);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.button3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MenuScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

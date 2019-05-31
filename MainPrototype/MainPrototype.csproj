@@ -215,5 +215,14 @@
   <ItemGroup>
     <None Include="Resources\suchEmpty.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Intro.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MenuScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -33,17 +33,18 @@ namespace MainPrototype
         {
             Statics.t = new Thread(() =>
             {
-                //Thread.Sleep(5000);
-                //Thread.Sleep(1000);
-                //Invoke((MethodInvoker)delegate
-                //{
-                //    Statics.BgScreen.pbBG.Image = Properties.Resources.lastOne ;
-                //});
-                //Thread.Sleep(3000);
-                //Invoke((MethodInvoker)delegate
-                //{
-                //    Statics.BgScreen.pbBG.Image = null;
-                //});
+                Thread.Sleep(5000);
+                Thread.Sleep(1000);
+                Invoke((MethodInvoker)delegate
+                {
+                    Statics.BgScreen.pbBG.BackColor = Color.White;
+                    Statics.BgScreen.pbBG.Image = Properties.Resources.lastOne;
+                });
+                Thread.Sleep(3000);
+                Invoke((MethodInvoker)delegate
+                {
+                    Statics.BgScreen.pbBG.Image = null;
+                });
                 Application.Run(Statics.MenuScreen);
         });
             Statics.t.Start();

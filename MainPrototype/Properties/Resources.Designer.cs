@@ -183,6 +183,16 @@ namespace MainPrototype.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Intro {
+            get {
+                object obj = ResourceManager.GetObject("Intro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lastOne {
             get {
                 object obj = ResourceManager.GetObject("lastOne", resourceCulture);
@@ -213,9 +223,9 @@ namespace MainPrototype.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap minus_48px {
+        internal static System.Drawing.Bitmap MenuScreen {
             get {
-                object obj = ResourceManager.GetObject("minus_48px", resourceCulture);
+                object obj = ResourceManager.GetObject("MenuScreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

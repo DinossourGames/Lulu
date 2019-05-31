@@ -138,6 +138,13 @@ namespace MainPrototype
         public MenuScreen()
         {
             InitializeComponent();
+            button1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button3.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(15, 255, 255, 255);
+            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(15, 255, 255, 255);
+            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(15, 255, 255, 255);
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -163,5 +170,6 @@ namespace MainPrototype
         {
 
         }
+
     }
 }
