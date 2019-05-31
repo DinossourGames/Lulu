@@ -143,6 +143,11 @@ namespace MainPrototype
             InitializeComponent();
             tutorials = new Image[10];
             count = 0;
+
+            button1.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button2.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            button1.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            button2.FlatAppearance.MouseOverBackColor = Color.Transparent;
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -151,7 +156,7 @@ namespace MainPrototype
             {
                 Statics.MenuScreen.Show();
                 this.Hide();
-                
+
             }
             else
             {
@@ -160,8 +165,10 @@ namespace MainPrototype
             }
         }
 
+
+
         private void Button1_Click(object sender, EventArgs e)
-        {           
+        {
             if (count == 9)
             {
                 this.Hide();

@@ -37,6 +37,41 @@ namespace ClassModels
             Speed = p.Speed;
             Range = p.Range;
             Luck = p.Luck;
+            ItemAtual = p.ItemAtual;
+            PoolResult = p.PoolResult;
+        }
+
+        public Player(Player p, bool v)
+        {
+            if (v) // if v true then updates item
+            {
+
+                MaxHp = p.MaxHp;
+                Hp = p.Hp;
+                Atk = p.Atk;
+                Def = p.Def;
+                X = p.X;
+                Y = p.Y;
+                Speed = p.Speed;
+                Range = p.Range;
+                Luck = p.Luck;
+                ItemAtual = p.PoolResult;
+                PoolResult = null;
+            }
+            else //if v false then keeps the player item 
+            {
+                MaxHp = p.MaxHp;
+                Hp = p.Hp;
+                Atk = p.Atk;
+                Def = p.Def;
+                X = p.X;
+                Y = p.Y;
+                Speed = p.Speed;
+                Range = p.Range;
+                Luck = p.Luck;
+                ItemAtual = p.ItemAtual;
+                PoolResult = null;
+            }
         }
         public Player(int maxhp, int hp, int atk, int def, int x, int y, int speed, int range, int luck)
         {

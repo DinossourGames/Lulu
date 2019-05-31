@@ -518,6 +518,7 @@
             this.ItemAtualPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.ItemAtualPic.TabIndex = 8;
             this.ItemAtualPic.TabStop = false;
+            this.ItemAtualPic.Click += new System.EventHandler(this.ItemAtualPic_Click);
             // 
             // pictureBox1
             // 

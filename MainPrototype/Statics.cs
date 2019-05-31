@@ -105,8 +105,9 @@ namespace MainPrototype
         public static void UpdatePlayer(Player p)
         {
             Player = p;
-            if (Player.Atk <= 0)
-                Player.Atk = 1;
+
+            Player.Atk = Player.Atk <= 0 ? 1 : Player.Atk;
+
             if (Player.Def <= 0)
                 Player.Def = 1;
             if (Player.Speed < 0)
@@ -125,13 +126,27 @@ namespace MainPrototype
             if (Player.Hp > Player.MaxHp + Player.ItemAtual.StatBonus.Hp)
                 Player.Hp = Player.MaxHp + Player.ItemAtual.StatBonus.Hp;
         }
+        public static void UpdatePlayer(bool v)
+        {
+
+            Player = new Player(ServerPlayer, v)
+            {
+                IsPlaying = true,
+                R = 0
+            };
+
+        }
         public static void UpdatePlayer()
         {
-            Player = CreateNewPlayer(ServerPlayer);
-            Player.IsPlaying = true;
-            Player.R = 0;
-           
+
+            Player = new Player(ServerPlayer)
+            {
+                IsPlaying = true,
+                R = 0
+            };
+
         }
+
         public static void BreakWeapon()
         {
             Player.ItemAtual = new Item(null, "0", "Nadadeira", "A arma mais confiavel", -1, Modificadores);

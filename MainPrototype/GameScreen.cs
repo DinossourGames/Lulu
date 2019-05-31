@@ -231,7 +231,7 @@ namespace MainPrototype
                             if (c.x == M.X && c.y == M.Y)
                             {
                                 MatrizTiles[M.X, M.Y].Vida = M.Hp.ToString();
-                                
+
                                 Statics.Player.ItemAtual.Durability--;
                                 if (Statics.Player.ItemAtual.Durability == 0)
                                     Statics.BreakWeapon();
@@ -381,7 +381,7 @@ namespace MainPrototype
 
         public void UpdateUI()
         {
-            if(Statics.Player.ItemAtual == null)
+            if (Statics.Player.ItemAtual == null)
             {
                 Statics.GenerateModifiers();
             }
@@ -459,17 +459,19 @@ namespace MainPrototype
 
             LblItemAtual.Text = Statics.Player.ItemAtual.Nome;
             LblDescAtual.Text = Statics.Player.ItemAtual.Description;
+
             if (Statics.Player.ItemAtual.URL == null)
             {
                 ItemAtualPic.Image = Properties.Resources.Nadadeira;
             }
             else
             {
+
                 LblDurabilty.Text = Statics.Player.ItemAtual.Durability.ToString();
-                ItemAtualPic.Load(Statics.Player.ItemAtual.URL);
+                ItemAtualPic.ImageLocation = Statics.Player.ItemAtual.URL;
             }
 
-            if(Statics.Player.PoolResult == null)
+            if (Statics.Player.PoolResult == null)
             {
                 PoolItemPic.Image = Properties.Resources.suchEmpty;
                 LblPoolItem.Text = "Ajuda a caminho!";
@@ -480,18 +482,25 @@ namespace MainPrototype
             }
             else
             {
-                PoolItemPic.Load(Statics.Player.PoolResult.URL);
-                LblPoolItem.Text = Statics.Player.PoolResult.Nome;
-                lblPoolAtk.Visible = true; lblPoolDef.Visible = true; lblPoolHp.Visible = true;
-                lblPoolLuck.Visible = true; lblPoolRange.Visible = true; lblPoolSpeed.Visible = true;
-                lblPoolAtk.Text = Statics.Player.PoolResult.StatBonus.Atk.ToString();
-                lblPoolDef.Text = Statics.Player.PoolResult.StatBonus.Def.ToString();
-                lblPoolHp.Text = Statics.Player.PoolResult.StatBonus.Hp.ToString();
-                lblPoolLuck.Text = Statics.Player.PoolResult.StatBonus.Luck.ToString();
-                lblPoolRange.Text = Statics.Player.PoolResult.StatBonus.AtkRange.ToString();
-                lblPoolSpeed.Text = Statics.Player.PoolResult.StatBonus.MovSpeed.ToString();
-                poolAtk.Visible = true; poolDef.Visible = true; poolHp.Visible = true;
-                poolLuck.Visible = true; poolRange.Visible = true; poolSpeed.Visible = true;
+                try
+                {
+                    PoolItemPic.ImageLocation = Statics.Player.PoolResult.URL;
+                    LblPoolItem.Text = Statics.Player.PoolResult.Nome;
+                    lblPoolAtk.Visible = true; lblPoolDef.Visible = true; lblPoolHp.Visible = true;
+                    lblPoolLuck.Visible = true; lblPoolRange.Visible = true; lblPoolSpeed.Visible = true;
+                    lblPoolAtk.Text = Statics.Player.PoolResult.StatBonus.Atk.ToString();
+                    lblPoolDef.Text = Statics.Player.PoolResult.StatBonus.Def.ToString();
+                    lblPoolHp.Text = Statics.Player.PoolResult.StatBonus.Hp.ToString();
+                    lblPoolLuck.Text = Statics.Player.PoolResult.StatBonus.Luck.ToString();
+                    lblPoolRange.Text = Statics.Player.PoolResult.StatBonus.AtkRange.ToString();
+                    lblPoolSpeed.Text = Statics.Player.PoolResult.StatBonus.MovSpeed.ToString();
+                    poolAtk.Visible = true; poolDef.Visible = true; poolHp.Visible = true;
+                    poolLuck.Visible = true; poolRange.Visible = true; poolSpeed.Visible = true;
+                }
+                catch
+                {
+                    throw;
+                }
             }
         }
 
@@ -805,7 +814,7 @@ namespace MainPrototype
                 await Statics.UpdateGame();
                 this.Hide();
                 Statics.MenuScreen.Show();
-            }          
+            }
         }
 
         public void ShakeScreen()
@@ -847,7 +856,7 @@ namespace MainPrototype
         {
             if (Statics.ServerPlayer != null)
             {
-                Debug.WriteLine(Statics.ServerPlayer.R);
+                //Debug.WriteLine(Statics.ServerPlayer.R);
                 if (Statics.ServerPlayer.R == 1)
                 {
                     Statics.UpdatePlayer();
@@ -875,12 +884,23 @@ namespace MainPrototype
             phase = Phase.ENEMYMOV;
         }
 
-        private void PoolItemPic_Click(object sender, EventArgs e)
+        private async void PoolItemPic_Click(object sender, EventArgs e)
         {
-            if(Statics.Player.PoolResult != null)
+            if (Statics.Player.PoolResult != null)
             {
-                Statics.Player.ItemAtual = Statics.Player.PoolResult;
-                Statics.Player.PoolResult = null;
+                Statics.UpdatePlayer(true);
+                await Statics.UpdateGame();
+                UpdateUI();
+            }
+        }
+
+        private async void ItemAtualPic_Click(object sender, EventArgs e)
+        {
+            if (Statics.Player.PoolResult != null)
+            {
+                Statics.UpdatePlayer(false);
+                await Statics.UpdateGame();
+                UpdateUI();
             }
         }
     }
