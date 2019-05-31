@@ -457,7 +457,7 @@ namespace MainPrototype
             LblDescAtual.Text = Statics.Player.ItemAtual.Description;
             if (Statics.Player.ItemAtual.URL == null)
             {
-
+                ItemAtualPic.Image = Properties.Resources.Nadadeira;
             }
             else
             {
@@ -869,6 +869,15 @@ namespace MainPrototype
         private void passTurn_Click(object sender, EventArgs e)
         {
             phase = Phase.ENEMYMOV;
+        }
+
+        private void PoolItemPic_Click(object sender, EventArgs e)
+        {
+            if(Statics.Player.PoolResult != null)
+            {
+                Statics.Player.ItemAtual = Statics.Player.PoolResult;
+                Statics.Player.PoolResult = null;
+            }
         }
     }
 }

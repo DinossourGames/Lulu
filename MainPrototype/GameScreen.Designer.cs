@@ -309,13 +309,15 @@
             // 
             // passTurn
             // 
+            this.passTurn.BackColor = System.Drawing.Color.White;
+            this.passTurn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.passTurn.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passTurn.Location = new System.Drawing.Point(1003, 40);
             this.passTurn.Name = "passTurn";
             this.passTurn.Size = new System.Drawing.Size(62, 45);
             this.passTurn.TabIndex = 11;
             this.passTurn.Text = "Passar turno";
-            this.passTurn.UseVisualStyleBackColor = true;
+            this.passTurn.UseVisualStyleBackColor = false;
             this.passTurn.Click += new System.EventHandler(this.passTurn_Click);
             // 
             // LblItemAtual
@@ -366,7 +368,6 @@
             this.lblPoolHp.Name = "lblPoolHp";
             this.lblPoolHp.Size = new System.Drawing.Size(32, 24);
             this.lblPoolHp.TabIndex = 7;
-            this.lblPoolHp.Text = "+ 0";
             this.lblPoolHp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolHp.Visible = false;
             // 
@@ -377,7 +378,6 @@
             this.lblPoolSpeed.Name = "lblPoolSpeed";
             this.lblPoolSpeed.Size = new System.Drawing.Size(32, 24);
             this.lblPoolSpeed.TabIndex = 7;
-            this.lblPoolSpeed.Text = "+ 0";
             this.lblPoolSpeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolSpeed.Visible = false;
             // 
@@ -388,7 +388,6 @@
             this.lblPoolAtk.Name = "lblPoolAtk";
             this.lblPoolAtk.Size = new System.Drawing.Size(32, 24);
             this.lblPoolAtk.TabIndex = 7;
-            this.lblPoolAtk.Text = "+ 0";
             this.lblPoolAtk.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolAtk.Visible = false;
             // 
@@ -399,7 +398,6 @@
             this.lblPoolRange.Name = "lblPoolRange";
             this.lblPoolRange.Size = new System.Drawing.Size(32, 24);
             this.lblPoolRange.TabIndex = 7;
-            this.lblPoolRange.Text = "+ 0";
             this.lblPoolRange.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolRange.Visible = false;
             // 
@@ -410,7 +408,6 @@
             this.lblPoolDef.Name = "lblPoolDef";
             this.lblPoolDef.Size = new System.Drawing.Size(32, 24);
             this.lblPoolDef.TabIndex = 7;
-            this.lblPoolDef.Text = "+ 0";
             this.lblPoolDef.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolDef.Visible = false;
             // 
@@ -421,13 +418,12 @@
             this.lblPoolLuck.Name = "lblPoolLuck";
             this.lblPoolLuck.Size = new System.Drawing.Size(32, 24);
             this.lblPoolLuck.TabIndex = 7;
-            this.lblPoolLuck.Text = "+ 0";
             this.lblPoolLuck.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblPoolLuck.Visible = false;
             // 
             // poolSpeed
             // 
-            this.poolSpeed.BackColor = System.Drawing.Color.DarkGray;
+            this.poolSpeed.BackColor = System.Drawing.Color.Transparent;
             this.poolSpeed.BackgroundImage = global::MainPrototype.Properties.Resources.Speed;
             this.poolSpeed.Location = new System.Drawing.Point(895, 522);
             this.poolSpeed.Name = "poolSpeed";
@@ -438,7 +434,7 @@
             // 
             // poolHp
             // 
-            this.poolHp.BackColor = System.Drawing.Color.DarkGray;
+            this.poolHp.BackColor = System.Drawing.Color.Transparent;
             this.poolHp.Image = global::MainPrototype.Properties.Resources.Vida;
             this.poolHp.Location = new System.Drawing.Point(895, 495);
             this.poolHp.Name = "poolHp";
@@ -449,7 +445,7 @@
             // 
             // poolLuck
             // 
-            this.poolLuck.BackColor = System.Drawing.Color.DarkGray;
+            this.poolLuck.BackColor = System.Drawing.Color.Transparent;
             this.poolLuck.BackgroundImage = global::MainPrototype.Properties.Resources.Lucky;
             this.poolLuck.Location = new System.Drawing.Point(1095, 522);
             this.poolLuck.Name = "poolLuck";
@@ -460,7 +456,7 @@
             // 
             // poolDef
             // 
-            this.poolDef.BackColor = System.Drawing.Color.DarkGray;
+            this.poolDef.BackColor = System.Drawing.Color.Transparent;
             this.poolDef.BackgroundImage = global::MainPrototype.Properties.Resources.Def;
             this.poolDef.Location = new System.Drawing.Point(1095, 495);
             this.poolDef.Name = "poolDef";
@@ -471,7 +467,7 @@
             // 
             // poolRange
             // 
-            this.poolRange.BackColor = System.Drawing.Color.DarkGray;
+            this.poolRange.BackColor = System.Drawing.Color.Transparent;
             this.poolRange.BackgroundImage = global::MainPrototype.Properties.Resources.Range;
             this.poolRange.Location = new System.Drawing.Point(995, 522);
             this.poolRange.Name = "poolRange";
@@ -482,7 +478,7 @@
             // 
             // poolAtk
             // 
-            this.poolAtk.BackColor = System.Drawing.Color.DarkGray;
+            this.poolAtk.BackColor = System.Drawing.Color.Transparent;
             this.poolAtk.BackgroundImage = global::MainPrototype.Properties.Resources.Atk;
             this.poolAtk.Location = new System.Drawing.Point(995, 495);
             this.poolAtk.Name = "poolAtk";
@@ -505,18 +501,17 @@
             // PoolItemPic
             // 
             this.PoolItemPic.BackColor = System.Drawing.Color.Transparent;
-            this.PoolItemPic.Image = ((System.Drawing.Image)(resources.GetObject("PoolItemPic.Image")));
             this.PoolItemPic.Location = new System.Drawing.Point(805, 467);
             this.PoolItemPic.Name = "PoolItemPic";
             this.PoolItemPic.Size = new System.Drawing.Size(82, 76);
             this.PoolItemPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PoolItemPic.TabIndex = 8;
             this.PoolItemPic.TabStop = false;
+            this.PoolItemPic.Click += new System.EventHandler(this.PoolItemPic_Click);
             // 
             // ItemAtualPic
             // 
             this.ItemAtualPic.BackColor = System.Drawing.Color.Transparent;
-            this.ItemAtualPic.Image = ((System.Drawing.Image)(resources.GetObject("ItemAtualPic.Image")));
             this.ItemAtualPic.Location = new System.Drawing.Point(804, 344);
             this.ItemAtualPic.Name = "ItemAtualPic";
             this.ItemAtualPic.Size = new System.Drawing.Size(102, 102);
@@ -550,66 +545,66 @@
             // 
             // LuckIcon
             // 
-            this.LuckIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.LuckIcon.BackColor = System.Drawing.Color.Transparent;
             this.LuckIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Lucky;
             this.LuckIcon.Location = new System.Drawing.Point(804, 296);
             this.LuckIcon.Name = "LuckIcon";
-            this.LuckIcon.Size = new System.Drawing.Size(33, 33);
+            this.LuckIcon.Size = new System.Drawing.Size(32, 32);
             this.LuckIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LuckIcon.TabIndex = 6;
             this.LuckIcon.TabStop = false;
             // 
             // RangeIcon
             // 
-            this.RangeIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.RangeIcon.BackColor = System.Drawing.Color.Transparent;
             this.RangeIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Range;
             this.RangeIcon.Location = new System.Drawing.Point(804, 257);
             this.RangeIcon.Name = "RangeIcon";
-            this.RangeIcon.Size = new System.Drawing.Size(33, 33);
+            this.RangeIcon.Size = new System.Drawing.Size(32, 32);
             this.RangeIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.RangeIcon.TabIndex = 5;
             this.RangeIcon.TabStop = false;
             // 
             // SpeedIcon
             // 
-            this.SpeedIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.SpeedIcon.BackColor = System.Drawing.Color.Transparent;
             this.SpeedIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Speed;
             this.SpeedIcon.Location = new System.Drawing.Point(804, 218);
             this.SpeedIcon.Name = "SpeedIcon";
-            this.SpeedIcon.Size = new System.Drawing.Size(33, 33);
+            this.SpeedIcon.Size = new System.Drawing.Size(32, 32);
             this.SpeedIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.SpeedIcon.TabIndex = 4;
             this.SpeedIcon.TabStop = false;
             // 
             // defIcon
             // 
-            this.defIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.defIcon.BackColor = System.Drawing.Color.Transparent;
             this.defIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Def;
             this.defIcon.Location = new System.Drawing.Point(804, 179);
             this.defIcon.Name = "defIcon";
-            this.defIcon.Size = new System.Drawing.Size(33, 33);
+            this.defIcon.Size = new System.Drawing.Size(32, 32);
             this.defIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.defIcon.TabIndex = 3;
             this.defIcon.TabStop = false;
             // 
             // AtkIcon
             // 
-            this.AtkIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.AtkIcon.BackColor = System.Drawing.Color.Transparent;
             this.AtkIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Atk;
             this.AtkIcon.Location = new System.Drawing.Point(804, 140);
             this.AtkIcon.Name = "AtkIcon";
-            this.AtkIcon.Size = new System.Drawing.Size(33, 33);
+            this.AtkIcon.Size = new System.Drawing.Size(32, 32);
             this.AtkIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.AtkIcon.TabIndex = 2;
             this.AtkIcon.TabStop = false;
             // 
             // hpIcon
             // 
-            this.hpIcon.BackColor = System.Drawing.Color.DarkGray;
+            this.hpIcon.BackColor = System.Drawing.Color.Transparent;
             this.hpIcon.BackgroundImage = global::MainPrototype.Properties.Resources.Vida;
             this.hpIcon.Location = new System.Drawing.Point(804, 101);
             this.hpIcon.Name = "hpIcon";
-            this.hpIcon.Size = new System.Drawing.Size(33, 33);
+            this.hpIcon.Size = new System.Drawing.Size(32, 32);
             this.hpIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.hpIcon.TabIndex = 1;
             this.hpIcon.TabStop = false;

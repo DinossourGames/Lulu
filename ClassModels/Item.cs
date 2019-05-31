@@ -9,17 +9,18 @@ namespace ClassModels
     public class Item
     {
         public String URL { get; set; }
-        public int Id { get; set; }
+        public String Id { get; set; }
         public string Nome { get; set; }
         public string Description { get; set; }
         public int Durability { get; set; }
         public Atributos StatBonus { get; set; }
         public int price { get; set; }
+        public bool isLootBox { get; set; }
         public Item()
         {
         }
 
-        public Item(String url, int id, string nome, string description, int durability, Atributos statBonus)
+        public Item(String url, String id, string nome, string description, int durability, Atributos statBonus)
         {
             URL = url;
             this.Id = id;

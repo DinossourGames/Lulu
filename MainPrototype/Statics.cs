@@ -73,7 +73,7 @@ namespace MainPrototype
         public static Atributos GenerateModifiers()
         {
             Modificadores = new Atributos(0, 0, 0, 0, Player.Range, 0);
-            Player.ItemAtual = new Item(null,0, "Nadadeira", "", -1, Modificadores);
+            Player.ItemAtual = new Item(null,"0", "Nadadeira", "A arma mais confiavel", -1, Modificadores);
             return Modificadores;
         }
 
@@ -134,7 +134,7 @@ namespace MainPrototype
         }
         public static void BreakWeapon()
         {
-            Player.ItemAtual = new Item(null, 0, "Nadadeira", "", -1, Modificadores);
+            Player.ItemAtual = new Item(null, "0", "Nadadeira", "A arma mais confiavel", -1, Modificadores);
         }
         /// <summary>
         /// Esta função salva o player.

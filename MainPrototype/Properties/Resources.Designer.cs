@@ -233,6 +233,16 @@ namespace MainPrototype.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Nadadeira {
+            get {
+                object obj = ResourceManager.GetObject("Nadadeira", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Nomezinho {
             get {
                 object obj = ResourceManager.GetObject("Nomezinho", resourceCulture);
@@ -266,6 +276,16 @@ namespace MainPrototype.Properties {
         internal static System.Drawing.Bitmap Seta {
             get {
                 object obj = ResourceManager.GetObject("Seta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Seta2 {
+            get {
+                object obj = ResourceManager.GetObject("Seta2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

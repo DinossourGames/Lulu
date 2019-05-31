@@ -194,5 +194,11 @@ namespace MainPrototype
             tutorials[8] = Properties.Resources._9_Amigos;
             tutorials[9] = Properties.Resources._10_TheEnd;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new GameScreen().Show();
+        }
     }
 }
