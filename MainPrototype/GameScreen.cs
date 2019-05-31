@@ -381,6 +381,10 @@ namespace MainPrototype
 
         public void UpdateUI()
         {
+            if(Statics.Player.ItemAtual == null)
+            {
+                Statics.GenerateModifiers();
+            }
             if (Statics.Player.Hp <= (Statics.Player.MaxHp + Statics.Player.ItemAtual.StatBonus.Hp) * 0.25)
             {
                 patricioPic.Image = Properties.Resources.Machucado;
